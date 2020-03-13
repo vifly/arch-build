@@ -1,1 +1,1 @@
-Use Github Actions to build Arch packages
+Use Github Actions to build Arch packages.

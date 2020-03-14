@@ -12,13 +12,12 @@ jobs:
     - uses: DuckSoft/build-aur-action@master
       with:
         repo-name: osu-lazer
-        
-    - id: getfilename
-      run: echo "::set-output name=file::$(ls ./osu-lazer/*.xz)"
     
-    - uses: actions/upload-artifact@v1.0.0
+    - uses: ncipollo/release-action@v1.6.1
       with:
-        name: osu-lazer
-        path: ${{ steps.getfilename.outputs.file }}
+        allowUpdates: true
+        tag: "packages"
+        artifacts: "./osu-lazer/*.xz"
+        token: ${{ secrets.GITHUB_TOKEN }}
 
  

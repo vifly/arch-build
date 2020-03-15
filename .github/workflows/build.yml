@@ -19,5 +19,20 @@ jobs:
         tag: "packages"
         artifacts: "./osu-lazer/*.xz"
         token: ${{ secrets.GITHUB_TOKEN }}
+  
+  build_mpv_mpris:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: DuckSoft/build-aur-action@master
+      with:
+        repo-name: mpv-mpris
+    
+    - uses: ncipollo/release-action@v1.6.1
+      with:
+        allowUpdates: true
+        tag: "packages"
+        artifacts: "./mpv-mpris/*.xz"
+        token: ${{ secrets.GITHUB_TOKEN }}
 
  

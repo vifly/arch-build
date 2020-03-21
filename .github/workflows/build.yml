@@ -34,5 +34,20 @@ jobs:
         tag: "packages"
         artifacts: "./mpv-mpris/*.xz"
         token: ${{ secrets.GITHUB_TOKEN }}
+        
+  build_breeze10:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: DuckSoft/build-aur-action@master
+      with:
+        repo-name: breeze10-kde-git
+    
+    - uses: ncipollo/release-action@v1.6.1
+      with:
+        allowUpdates: true
+        tag: "packages"
+        artifacts: "./breeze10-kde-git/*.xz"
+        token: ${{ secrets.GITHUB_TOKEN }}
 
  

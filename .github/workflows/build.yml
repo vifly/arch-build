@@ -49,5 +49,20 @@ jobs:
         tag: "packages"
         artifacts: "./breeze10-kde-git/*.xz"
         token: ${{ secrets.GITHUB_TOKEN }}
+        
+  build_weechat_notify_send:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: DuckSoft/build-aur-action@master
+      with:
+        repo-name: weechat-notify-send
+    
+    - uses: ncipollo/release-action@v1.6.1
+      with:
+        allowUpdates: true
+        tag: "packages"
+        artifacts: "./weechat-notify-send/*.xz"
+        token: ${{ secrets.GITHUB_TOKEN }}
 
  

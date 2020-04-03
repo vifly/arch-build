@@ -5,64 +5,23 @@ on:
     - cron:  '* */6 * * *'
 
 jobs:
-  build_osu:
-    runs-on: ubuntu-latest
+  build:
+    strategy:
+      matrix:
+        repos: [osu-lazer, mpv-mpris, breeze10-kde-git, weechat-notify-send]
 
+      fail-fast: false
+      
+    runs-on: ubuntu-latest
+    
     steps:
     - uses: DuckSoft/build-aur-action@master
       with:
-        repo-name: osu-lazer
+        repo-name: ${{ matrix.repos }}
     
     - uses: ncipollo/release-action@v1.6.1
       with:
         allowUpdates: true
         tag: "packages"
-        artifacts: "./osu-lazer/*.xz"
+        artifacts: "./*/*.xz"
         token: ${{ secrets.GITHUB_TOKEN }}
-  
-  build_mpv_mpris:
-    runs-on: ubuntu-latest
-
-    steps:
-    - uses: DuckSoft/build-aur-action@master
-      with:
-        repo-name: mpv-mpris
-    
-    - uses: ncipollo/release-action@v1.6.1
-      with:
-        allowUpdates: true
-        tag: "packages"
-        artifacts: "./mpv-mpris/*.xz"
-        token: ${{ secrets.GITHUB_TOKEN }}
-        
-  build_breeze10:
-    runs-on: ubuntu-latest
-
-    steps:
-    - uses: DuckSoft/build-aur-action@master
-      with:
-        repo-name: breeze10-kde-git
-    
-    - uses: ncipollo/release-action@v1.6.1
-      with:
-        allowUpdates: true
-        tag: "packages"
-        artifacts: "./breeze10-kde-git/*.xz"
-        token: ${{ secrets.GITHUB_TOKEN }}
-        
-  build_weechat_notify_send:
-    runs-on: ubuntu-latest
-
-    steps:
-    - uses: DuckSoft/build-aur-action@master
-      with:
-        repo-name: weechat-notify-send
-    
-    - uses: ncipollo/release-action@v1.6.1
-      with:
-        allowUpdates: true
-        tag: "packages"
-        artifacts: "./weechat-notify-send/*.xz"
-        token: ${{ secrets.GITHUB_TOKEN }}
-
- 

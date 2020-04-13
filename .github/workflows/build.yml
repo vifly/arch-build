@@ -8,7 +8,7 @@ jobs:
   build:
     strategy:
       matrix:
-        repos: [osu-lazer, mpv-mpris, breeze10-kde-git, weechat-notify-send, nheko-git]
+        repos: [osu-lazer, mpv-mpris, breeze10-kde-git, weechat-notify-send, nheko-git, fpp-git]
 
       fail-fast: false
       

@@ -25,3 +25,10 @@ jobs:
         tag: "packages"
         artifacts: "./*/*.xz"
         token: ${{ secrets.GITHUB_TOKEN }}
+        
+    - uses: ncipollo/release-action@v1.7.3
+      with:
+        allowUpdates: true
+        tag: "packages"
+        artifacts: "./*/*.zst"
+        token: ${{ secrets.GITHUB_TOKEN }}

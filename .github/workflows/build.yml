@@ -19,7 +19,7 @@ jobs:
       with:
         repo-name: ${{ matrix.repos }}
     
-    - uses: ncipollo/release-action@v1.6.1
+    - uses: ncipollo/release-action@v1.7.3
       with:
         allowUpdates: true
         tag: "packages"

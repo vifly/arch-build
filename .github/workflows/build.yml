@@ -50,7 +50,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: Build Non-AUR packages
-        uses: vifly/arch-build@master
+        uses: FFY00/build-arch-package@master
         with:
           PKGBUILD: $GITHUB_WORKSPACE/${{ matrix.PKGBUILDs }}
           OUTDIR: ./arch-packages

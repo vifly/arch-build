@@ -1,7 +1,7 @@
 name: BUILD
 
 on:
-  push
+  push:
   schedule:
     - cron:  '1 */6 * * *'
 

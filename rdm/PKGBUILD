@@ -21,7 +21,7 @@ depends=(
   'qt5-svg'
   'libssh2'
   'python')
-makedepends=('git' 'gcc' 'make' 'python-virtualenv')
+makedepends=('git' 'gcc' 'make' 'python-virtualenv' 'cmake')
 conflicts=('redis-desktop-manager-bin')
 source=("rdm::git://github.com/uglide/RedisDesktopManager.git#tag=$pkgver"
         'rdm.sh'

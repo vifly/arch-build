@@ -37,7 +37,7 @@ jobs:
   buildNonAUR:
     strategy:
       matrix:
-        PKGBUILDs: [rdm/PKGBUILD]
+        PKGBUILDs: [rdm]
 
       fail-fast: false
       
@@ -49,15 +49,15 @@ jobs:
         - /sys/fs/cgroup:/sys/fs/cgroup
     steps:
       - uses: actions/checkout@v2
+
       - name: Build Non-AUR packages
-        uses: FFY00/build-arch-package@master
+        uses: edlanglois/pkgbuild-action@v1
         with:
-          PKGBUILD: $GITHUB_WORKSPACE/${{ matrix.PKGBUILDs }}
-          OUTDIR: ./arch-packages
+          pkgdir: ${{ matrix.PKGBUILDs }}
       
       - uses: ncipollo/release-action@v1.7.3
         with:
           allowUpdates: true
           tag: "packages"
-          artifacts: "./arch-packages/*.zst"
+          artifacts: ${{ steps.makepkg.outputs.pkgfile0 }}
           token: ${{ secrets.GITHUB_TOKEN }}

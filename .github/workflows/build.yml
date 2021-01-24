@@ -51,6 +51,7 @@ jobs:
       - uses: actions/checkout@v2
 
       - name: Build Non-AUR packages
+        id: makepkg
         uses: edlanglois/pkgbuild-action@v1
         with:
           pkgdir: ${{ matrix.PKGBUILDs }}

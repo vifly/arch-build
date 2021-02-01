@@ -37,7 +37,7 @@ jobs:
   buildNonAUR:
     strategy:
       matrix:
-        PKGBUILDs: [rdm]
+        PKGBUILDs: [rdm, breeze10]
 
       fail-fast: false
       

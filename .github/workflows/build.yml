@@ -16,7 +16,7 @@ jobs:
     runs-on: ubuntu-latest
     
     steps:
-    - uses: zjuyk/build-aur-action@master
+    - uses: DuckSoft/build-aur-action@master
       with:
         repo-name: ${{ matrix.repos }}
     
@@ -48,7 +48,7 @@ jobs:
 
       - name: Build Non-AUR packages
         id: makepkg
-        uses: zjuyk/pkgbuild-action@master
+        uses: edlanglois/pkgbuild-action@v1
         with:
           pkgdir: ${{ matrix.PKGBUILDs }}
           aurDeps: true

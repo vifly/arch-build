@@ -16,7 +16,7 @@ jobs:
     runs-on: ubuntu-20.04
     
     steps:
-    - uses: DuckSoft/build-aur-action@master
+    - uses: zjuyk/build-aur-action@master
       with:
         repo-name: ${{ matrix.repos }}
     
@@ -48,7 +48,7 @@ jobs:
 
       - name: Build Non-AUR packages
         id: makepkg
-        uses: edlanglois/pkgbuild-action@v1
+        uses: zjuyk/pkgbuild-action@v1
         with:
           pkgdir: ${{ matrix.PKGBUILDs }}
           aurDeps: true

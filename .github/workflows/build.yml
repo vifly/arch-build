@@ -9,7 +9,7 @@ jobs:
   buildAUR:
     strategy:
       matrix:
-        repos: [osu-lazer, mpv-mpris, weechat-notify-send, fpp-git, anbox-image-gapps, redsocks]
+        repos: [osu-lazer, mpv-mpris, weechat-notify-send, fpp-git, anbox-image-gapps, redsocks, drill]
 
       fail-fast: false
       

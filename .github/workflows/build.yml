@@ -3,7 +3,7 @@ name: BUILD
 on:
   push:
   schedule:
-    - cron:  '1 */6 * * *'
+    - cron:  '1 */8 * * *'
 
 jobs:
   buildAUR:
@@ -20,12 +20,10 @@ jobs:
       with:
         repo-name: ${{ matrix.repos }}
     
-    - uses: ncipollo/release-action@v1
+    - uses: actions/upload-artifact@v2
       with:
-        allowUpdates: true
-        tag: "packages"
-        artifacts: "./*/*.xz"
-        token: ${{ secrets.GITHUB_TOKEN }}
+        path: ${{ matrix.repos }}/*.pkg.tar.zst
+        name: ${{ matrix.repos }}
         
     - uses: ncipollo/release-action@v1
       with:
@@ -52,6 +50,11 @@ jobs:
         with:
           pkgdir: ${{ matrix.PKGBUILDs }}
           aurDeps: true
+          
+      - uses: actions/upload-artifact@v2
+        with:
+          path: ${{ matrix.PKGBUILDs }}/*.pkg.tar.zst
+          name: ${{ matrix.PKGBUILDs }}
       
       - uses: ncipollo/release-action@v1
         with:
@@ -59,3 +62,24 @@ jobs:
           tag: "packages"
           artifacts: ${{ steps.makepkg.outputs.pkgfile0 }}
           token: ${{ secrets.GITHUB_TOKEN }}
+          
+  uploadToOnedrive:      
+    runs-on: ubuntu-20.04
+    if: always()
+    needs: [buildAUR, buildNonAUR]
+
+    steps:
+      - uses: actions/checkout@v2
+      
+      - uses: actions/download-artifact@v2
+      
+      - uses: ./
+        with:
+          RCLONE_ONEDRIVE_CLIENT_ID: ${{ secrets.RCLONE_ONEDRIVE_CLIENT_ID }}
+          RCLONE_ONEDRIVE_CLIENT_SECRET: ${{ secrets.RCLONE_ONEDRIVE_CLIENT_SECRET }}
+          RCLONE_ONEDRIVE_REGION: global
+          RCLONE_ONEDRIVE_TOKEN: ${{ secrets.RCLONE_ONEDRIVE_TOKEN }}
+          RCLONE_ONEDRIVE_DRIVE_ID: ${{ secrets.RCLONE_ONEDRIVE_DRIVE_ID }}
+          RCLONE_ONEDRIVE_DRIVE_TYPE: personal
+          dest_path: /archrepo
+          repo_name: vifly

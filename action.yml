@@ -1,0 +1,31 @@
+name: 'Generate Arch Repo database and upload'
+inputs:
+  RCLONE_ONEDRIVE_CLIENT_ID:
+    required: true
+  RCLONE_ONEDRIVE_CLIENT_SECRET:
+    required: true
+  RCLONE_ONEDRIVE_REGION:
+    required: true
+  RCLONE_ONEDRIVE_TOKEN:
+    required: true
+  RCLONE_ONEDRIVE_DRIVE_ID:
+    required: true
+  RCLONE_ONEDRIVE_DRIVE_TYPE:
+    required: true
+  dest_path:
+    required: true
+  repo_name:
+    required: true
+runs:
+  using: 'docker'
+  image: 'Dockerfile'
+  
+  env:
+    RCLONE_ONEDRIVE_CLIENT_ID: ${{ inputs.RCLONE_ONEDRIVE_CLIENT_ID }}
+    RCLONE_ONEDRIVE_CLIENT_SECRET: ${{ inputs.RCLONE_ONEDRIVE_CLIENT_SECRET }}
+    RCLONE_ONEDRIVE_REGION: ${{ inputs.RCLONE_ONEDRIVE_REGION }}
+    RCLONE_ONEDRIVE_TOKEN: ${{ inputs.RCLONE_ONEDRIVE_TOKEN }}
+    RCLONE_ONEDRIVE_DRIVE_ID: ${{ inputs.RCLONE_ONEDRIVE_DRIVE_ID }}
+    RCLONE_ONEDRIVE_DRIVE_TYPE: ${{ inputs.RCLONE_ONEDRIVE_DRIVE_TYPE }}
+    dest_path: ${{ inputs.dest_path }}
+    repo_name: ${{ inputs.repo_name }}

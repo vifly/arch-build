@@ -18,7 +18,7 @@ jobs:
     steps:
     - uses: zjuyk/build-aur-action@master
       with:
-        repo-name: ${{ matrix.repos }}
+        pkg-name: ${{ matrix.repos }}
     
     - uses: actions/upload-artifact@v2
       with:

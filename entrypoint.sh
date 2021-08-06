@@ -18,11 +18,11 @@ fi
 
 cd upload_packages || exit 1
 
-repo-add "./$repo_name.db.tar.gz" ./*.tar.zst
+repo-add "./${repo_name:?}.db.tar.gz" ./*.tar.zst
 python3 ../sync.py
-rm "./$repo_name.db.tar.gz"
-rm "./$repo_name.files.tar.gz"
+rm "./${repo_name:?}.db.tar.gz"
+rm "./${repo_name:?}.files.tar.gz"
 
-repo-add "./$repo_name.db.tar.gz" ./*.tar.zst
+repo-add "./${repo_name:?}.db.tar.gz" ./*.tar.zst
 
-rclone copy ./ onedrive:/archrepo --copy-links
+rclone copy ./ "onedrive:${dest_path:?}" --copy-links

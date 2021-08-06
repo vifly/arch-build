@@ -16,9 +16,9 @@ jobs:
     runs-on: ubuntu-20.04
     
     steps:
-    - uses: zjuyk/build-aur-action@master
+    - uses: DuckSoft/build-aur-action@master
       with:
-        pkg-name: ${{ matrix.repos }}
+        repo-name: ${{ matrix.repos }}
     
     - uses: actions/upload-artifact@v2
       with:

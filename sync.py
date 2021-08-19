@@ -100,15 +100,18 @@ def get_old_packages(
     return old_packages
 
 
-def download_all_packages(
+def download_local_miss_files(
+    local_packages: list["PkgInfo"],
     remote_packages: list["PkgInfo"],
     old_packages: list["PkgInfo"],
 ):
+    local_files = [i.filename for i in local_packages]
     remote_files = [i.filename for i in remote_packages]
     old_files = [i.filename for i in old_packages]
     remote_new_files = [i for i in remote_files if i not in old_files]
     for r in remote_new_files:
-        rclone_download(r)
+        if r not in local_files and ".db" not in r and ".files" not in r:
+            rclone_download(r)
 
 
 if __name__ == "__main__":
@@ -133,4 +136,4 @@ if __name__ == "__main__":
         print(f"delete onedrive {i.filename}")
         rclone_delete(i.filename)
 
-    download_all_packages(remote_packages, old_packages)
+    download_local_miss_files(local_packages, remote_packages, old_packages)

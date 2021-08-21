@@ -13,7 +13,7 @@ jobs:
 
       fail-fast: false
       
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
     
     steps:
     - uses: DuckSoft/build-aur-action@master
@@ -39,14 +39,14 @@ jobs:
 
       fail-fast: false
       
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
 
     steps:
       - uses: actions/checkout@v2
 
       - name: Build Non-AUR packages
         id: makepkg
-        uses: zjuyk/pkgbuild-action@master
+        uses: edlanglois/pkgbuild-action@v1
         with:
           pkgdir: ${{ matrix.PKGBUILDs }}
           aurDeps: true
@@ -64,7 +64,7 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
           
   uploadToOnedrive:      
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
     if: always()
     needs: [buildAUR, buildNonAUR]
 

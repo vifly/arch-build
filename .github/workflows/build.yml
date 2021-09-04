@@ -63,7 +63,7 @@ jobs:
           artifacts: ${{ steps.makepkg.outputs.pkgfile0 }}
           token: ${{ secrets.GITHUB_TOKEN }}
           
-  uploadToOnedrive:      
+  uploadToOneDrive:      
     runs-on: ubuntu-latest
     if: always()
     needs: [buildAUR, buildNonAUR]

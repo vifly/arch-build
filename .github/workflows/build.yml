@@ -9,7 +9,7 @@ jobs:
   buildAUR:
     strategy:
       matrix:
-        repos: [osu-lazer, mpv-mpris, weechat-notify-send, fpp, redsocks, drill, k6, redis-desktop-manager, git-cola, python-ffmpeg]
+        repos: [osu-lazer, mpv-mpris, weechat-notify-send, fpp, redsocks, drill, k6, redis-desktop-manager, git-cola, python-ffmpeg, yt-dlp]
 
       fail-fast: false
       

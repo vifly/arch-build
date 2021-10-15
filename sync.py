@@ -5,6 +5,7 @@ import os
 import tarfile
 import shutil
 import glob
+import pyalpm
 from typing import NamedTuple
 
 REPO_NAME = os.environ["repo_name"]
@@ -52,15 +53,6 @@ def get_pkg_infos(file_path: str) -> list["PkgInfo"]:
     return pkg_infos
 
 
-def vercmp(ver1: str, ver2: str) -> int:
-    r = subprocess.run(
-        ["vercmp", ver1, ver2],
-        stdout=subprocess.PIPE,
-    )
-
-    return int(r.stdout.decode().strip())
-
-
 def rclone_delete(name: str):
     r = subprocess.run(
         ["rclone", "delete", f"onedrive:/{ROOT_PATH}/{name}"],
@@ -93,7 +85,7 @@ def get_old_packages(
     for l in local_packages:
         for r in remote_packages:
             if l.pkgname == r.pkgname:
-                res = vercmp(l.version, r.version)
+                res = pyalpm.vercmp(l.version, r.version)
                 if res > 0:
                     old_packages.append(r)
 
@@ -120,8 +112,9 @@ if __name__ == "__main__":
         stderr=subprocess.PIPE,
     )
     if r.returncode != 0:
+        print("Remote database file is not exist!")
         print(
-            "If you are running this script for the first time, you can ignore below error."
+            "If you are running this script for the first time, you can ignore this error."
         )
         print(r.stderr.decode())
         exit(0)

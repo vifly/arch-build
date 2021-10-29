@@ -16,9 +16,9 @@ jobs:
     runs-on: ubuntu-latest
     
     steps:
-    - uses: DuckSoft/build-aur-action@master
+    - uses: zjuyk/pkgbuild-aur@master
       with:
-        repo-name: ${{ matrix.repos }}
+        pkg-name: ${{ matrix.repos }}
     
     - uses: actions/upload-artifact@v2
       with:

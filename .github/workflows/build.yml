@@ -9,7 +9,7 @@ jobs:
   buildAUR:
     strategy:
       matrix:
-        repos: [osu-lazer, mpv-mpris, weechat-notify-send, fpp, redsocks, drill, k6, redis-desktop-manager, git-cola, python-ffmpeg, yt-dlp]
+        repos: [osu-lazer, mpv-mpris, weechat-notify-send, fpp, redsocks, drill, k6, redis-desktop-manager, git-cola, python-ffmpeg, makedeb-makepkg]
 
       fail-fast: false
       
@@ -35,7 +35,7 @@ jobs:
   buildNonAUR:
     strategy:
       matrix:
-        PKGBUILDs: [breeze10]
+        PKGBUILDs: [breeze10, makedeb]
 
       fail-fast: false
       

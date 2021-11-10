@@ -46,9 +46,10 @@ jobs:
 
       - name: Build Non-AUR packages
         id: makepkg
-        uses: zjuyk/pkgbuild-aur@master
+        uses: edlanglois/pkgbuild-action@v1
         with:
-          pkg-name: ${{ matrix.PKGBUILDs }}
+          pkgdir: ${{ matrix.PKGBUILDs }}
+          aurDeps: true
           
       - uses: actions/upload-artifact@v2
         with:

@@ -9,7 +9,7 @@ jobs:
   buildAUR:
     strategy:
       matrix:
-        repos: [osu-lazer, mpv-mpris, weechat-notify-send, fpp, redsocks, drill, k6, redis-desktop-manager, git-cola, python-ffmpeg, python-fqdn]
+        repos: [osu-lazer, mpv-mpris, weechat-notify-send, fpp, redsocks, drill, k6, redis-desktop-manager, git-cola, python-ffmpeg, python-fqdn, python-pprintpp]
 
       fail-fast: false
       
@@ -35,7 +35,7 @@ jobs:
   buildNonAUR:
     strategy:
       matrix:
-        PKGBUILDs: [breeze10, python-pycountry-convert]
+        PKGBUILDs: [breeze10]
 
       fail-fast: false
       

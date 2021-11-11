@@ -11,9 +11,8 @@ cat << EOM >> /etc/pacman.conf
 Server = https://repo.archlinuxcn.org/x86_64
 EOM
 
-pacman -Syu --noconfirm
-pacman -S archlinuxcn-keyring --noconfirm
-pacman -S yay --noconfirm
+pacman -Sy --noconfirm && pacman -S --noconfirm archlinuxcn-keyring
+pacman -S --noconfirm yay
 
 sudo --set-home -u builder yay -S "$pkgname"
 mv ./.cache/yay/* ./

@@ -11,6 +11,7 @@ cat << EOM >> /etc/pacman.conf
 Server = https://repo.archlinuxcn.org/x86_64
 EOM
 
+pacman-key --init
 pacman -Sy --noconfirm && pacman -S --noconfirm archlinuxcn-keyring
 pacman -S --noconfirm yay
 

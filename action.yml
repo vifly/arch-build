@@ -16,6 +16,8 @@ inputs:
     required: true
   repo_name:
     required: true
+  gpg-privatekey:
+    description: 'Your GPG private key, used to sign repo.'
 runs:
   using: 'docker'
   image: 'Dockerfile'
@@ -29,3 +31,4 @@ runs:
     RCLONE_ONEDRIVE_DRIVE_TYPE: ${{ inputs.RCLONE_ONEDRIVE_DRIVE_TYPE }}
     dest_path: ${{ inputs.dest_path }}
     repo_name: ${{ inputs.repo_name }}
+    gpg_key: ${{ inputs.gpg-privatekey }}

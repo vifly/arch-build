@@ -85,3 +85,4 @@ jobs:
           RCLONE_ONEDRIVE_DRIVE_TYPE: personal
           dest_path: /archrepo
           repo_name: vifly
+          gpg-privatekey: ${{ secrets.gpg_private_key }}

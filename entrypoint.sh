@@ -16,6 +16,10 @@ if [ ! -f ~/.config/rclone/rclone.conf ]; then
     echo "drive_id=$RCLONE_ONEDRIVE_DRIVE_ID" >> ~/.config/rclone/rclone.conf
 fi
 
+if [ ! -z "$gpg_key" ]; then
+    echo "$gpg_key" | gpg --import
+fi
+
 cd upload_packages || exit 1
 
 repo-add "./${repo_name:?}.db.tar.gz" ./*.tar.zst
@@ -23,6 +27,6 @@ python3 ../sync.py
 rm "./${repo_name:?}.db.tar.gz"
 rm "./${repo_name:?}.files.tar.gz"
 
-repo-add "./${repo_name:?}.db.tar.gz" ./*.tar.zst
+repo-add --verify --sign "./${repo_name:?}.db.tar.gz" ./*.tar.zst
 
 rclone copy ./ "onedrive:${dest_path:?}" --copy-links

@@ -16,5 +16,5 @@ pacman -Sy --noconfirm && pacman -S --noconfirm archlinuxcn-keyring
 pacman -S --noconfirm yay
 
 sudo --set-home -u builder yay -S --noconfirm "$pkgname"
-mv ./.cache/yay/* ./
+mv ~/.cache/yay/* ./
 

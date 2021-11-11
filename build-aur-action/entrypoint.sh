@@ -12,6 +12,7 @@ Server = https://repo.archlinuxcn.org/x86_64
 EOM
 
 pacman -Syu --noconfirm
+pacman -S archlinuxcn-keyring --noconfirm
 pacman -S yay --noconfirm
 
 sudo --set-home -u builder yay -S "$pkgname"

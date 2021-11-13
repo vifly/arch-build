@@ -2,10 +2,7 @@
 set -e
 
 mkdir upload_packages
-pacman -S --noconfirm tree
-tree $local_path
 cp $local_path/*/*/*.tar.zst ./upload_packages/
-cp ./sync.py ./upload_packages/
 
 if [ ! -f ~/.config/rclone/rclone.conf ]; then
     mkdir --parents ~/.config/rclone
@@ -27,7 +24,7 @@ fi
 cd upload_packages || exit 1
 
 repo-add "./${repo_name:?}.db.tar.gz" ./*.tar.zst
-python3 ./sync.py
+python3 ../sync.py
 rm "./${repo_name:?}.db.tar.gz"
 rm "./${repo_name:?}.files.tar.gz"
 

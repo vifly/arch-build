@@ -18,6 +18,8 @@ inputs:
     required: true
   gpg-privatekey:
     description: 'Your GPG private key, used to sign repo.'
+  local_path:
+    default: './'
 runs:
   using: 'docker'
   image: 'Dockerfile'
@@ -32,3 +34,4 @@ runs:
     dest_path: ${{ inputs.dest_path }}
     repo_name: ${{ inputs.repo_name }}
     gpg_key: ${{ inputs.gpg-privatekey }}
+    local_path: ${{ inputs.local_path }}

@@ -2,6 +2,7 @@
 set -e
 
 mkdir upload_packages
+pacman -S --noconfirm tree
 tree $local_path
 cp $local_path/*/*/*.tar.zst ./upload_packages/
 cp ./sync.py ./upload_packages/

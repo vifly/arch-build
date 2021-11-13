@@ -9,7 +9,7 @@ jobs:
   buildAUR:
     strategy:
       matrix:
-        repos: [osu-lazer, mpv-mpris, weechat-notify-send, fpp, redsocks, drill, k6, redis-desktop-manager, git-cola, python-ffmpeg, python-fqdn, python-pprintpp, makedeb, makedeb-makepkg]
+        repos: [osu-lazer, mpv-mpris, weechat-notify-send, fpp, redsocks, drill, k6, redis-desktop-manager, git-cola, python-ffmpeg, python-fqdn, python-pprintpp, makedeb]
 
       fail-fast: false
       
@@ -24,7 +24,7 @@ jobs:
     
     - uses: actions/upload-artifact@v2
       with:
-        path: ${{ matrix.repos }}/*.pkg.tar.zst
+        path: ./*/*.pkg.tar.zst
         name: ${{ matrix.repos }}
         
     - uses: ncipollo/release-action@v1
@@ -55,7 +55,7 @@ jobs:
           
       - uses: actions/upload-artifact@v2
         with:
-          path: ${{ matrix.PKGBUILDs }}/*.pkg.tar.zst
+          path: ./*/*.pkg.tar.zst
           name: ${{ matrix.PKGBUILDs }}
       
       - uses: ncipollo/release-action@v1

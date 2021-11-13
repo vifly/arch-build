@@ -2,7 +2,8 @@
 set -e
 
 mkdir upload_packages
-cp $local_path/*/*.tar.zst ./upload_packages/
+tree $local_path
+cp $local_path/*/*/*.tar.zst ./upload_packages/
 cp ./sync.py ./upload_packages/
 
 if [ ! -f ~/.config/rclone/rclone.conf ]; then

@@ -29,6 +29,7 @@ python3 $init_path/create-db-and-upload-action/sync.py
 rm "./${repo_name:?}.db.tar.gz"
 rm "./${repo_name:?}.files.tar.gz"
 
+gpg --detach-sig --yes *.tar.zst
 repo-add --verify --sign "./${repo_name:?}.db.tar.gz" ./*.tar.zst
 
 rclone copy ./ "onedrive:${dest_path:?}" --copy-links

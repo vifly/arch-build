@@ -7,6 +7,7 @@ import shutil
 import glob
 import pyalpm
 from typing import NamedTuple
+from contextlib import suppress
 
 REPO_NAME = os.environ["repo_name"]
 ROOT_PATH = os.environ["dest_path"]
@@ -103,7 +104,8 @@ def download_local_miss_files(
     remote_new_files = [i for i in remote_files if i not in old_files]
     for r in remote_new_files:
         if r not in local_files and ".db" not in r and ".files" not in r:
-            rclone_download(r)
+            with suppress(RuntimeError):
+                rclone_download(r)
 
 
 if __name__ == "__main__":
@@ -128,5 +130,7 @@ if __name__ == "__main__":
     for i in old_packages:
         print(f"delete onedrive {i.filename}")
         rclone_delete(i.filename)
+        with suppress(RuntimeError):
+            rclone_delete(i.filename + ".sig")
 
     download_local_miss_files(local_packages, remote_packages, old_packages)

@@ -29,11 +29,12 @@ python3 $init_path/create-db-and-upload-action/sync.py
 rm "./${repo_name:?}.db.tar.gz"
 rm "./${repo_name:?}.files.tar.gz"
 
-packages=( "*.tar.zst" )
-for name in $packages
-do
-    gpg --detach-sig --yes $name
-done
-repo-add --verify --sign "./${repo_name:?}.db.tar.gz" ./*.tar.zst
-
+if [ ! -z "$gpg_key" ]; then
+    packages=( "*.tar.zst" )
+    for name in $packages
+    do
+        gpg --detach-sig --yes $name
+    done
+    repo-add --verify --sign "./${repo_name:?}.db.tar.gz" ./*.tar.zst
+fi
 rclone copy ./ "onedrive:${dest_path:?}" --copy-links

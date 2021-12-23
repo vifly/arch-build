@@ -36,7 +36,8 @@ function recursive_build () {
 		if [ -d "$d" ]; then
 			(cd -- "$d" && recursive_build)
 		fi
-	
+		
+		echo "Start build $d"
 		sudo -u builder makepkg --printsrcinfo > .SRCINFO
 		mapfile -t OTHERPKGDEPS < \
 			<(sed -n -e 's/^[[:space:]]*\(make\)\?depends\(_x86_64\)\? = \([[:alnum:][:punct:]]*\)[[:space:]]*$/\3/p' .SRCINFO)
@@ -63,10 +64,11 @@ if [ -n "${INPUT_AURDEPS:-}" ]; then
 	
 	# If package have dependencies from AUR and we want to use our PKGBUILD of these dependencies
 	CURDIR="$PWD"
+	echo "$CURDIR"
 	recursive_build
 	cd "$CURDIR"
 	
-	sudo -H -u builder yay --sync --noconfirm --needed "${PKGDEPS[@]}"
+	sudo -H -u builder yay --sync --noconfirm "${PKGDEPS[@]}"
 fi
 
 # Build packages

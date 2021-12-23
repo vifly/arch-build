@@ -41,7 +41,7 @@ function recursive_build () {
 	sudo -u builder makepkg --printsrcinfo > .SRCINFO
 	mapfile -t OTHERPKGDEPS < \
 		<(sed -n -e 's/^[[:space:]]*\(make\)\?depends\(_x86_64\)\? = \([[:alnum:][:punct:]]*\)[[:space:]]*$/\3/p' .SRCINFO)
-	sudo -H -u builder yay --sync --noconfirm "${OTHERPKGDEPS[@]}"
+	sudo -H -u builder yay --sync --noconfirm --needed "${OTHERPKGDEPS[@]}"
 	
 	sudo -H -u builder makepkg --install --noconfirm
 	cp ./*.pkg.tar.zst "${INPUT_PKGDIR:-.}"
@@ -70,7 +70,7 @@ if [ -n "${INPUT_AURDEPS:-}" ]; then
 	done
 	cd "$CURDIR"
 	
-	sudo -H -u builder yay --sync --noconfirm "${PKGDEPS[@]}"
+	sudo -H -u builder yay --sync --noconfirm --needed "${PKGDEPS[@]}"
 fi
 
 # Build packages

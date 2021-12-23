@@ -43,6 +43,7 @@ function recursive_build () {
 		sudo -H -u builder yay --sync --noconfirm "${OTHERPKGDEPS[@]}"
 	
 		sudo -H -u builder makepkg -i
+		cp ./*.pkg.tar.zst "${INPUT_PKGDIR:-.}"
 	done
 }
 

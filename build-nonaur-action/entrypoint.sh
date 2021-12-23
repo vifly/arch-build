@@ -43,7 +43,7 @@ function recursive_build () {
 		<(sed -n -e 's/^[[:space:]]*\(make\)\?depends\(_x86_64\)\? = \([[:alnum:][:punct:]]*\)[[:space:]]*$/\3/p' .SRCINFO)
 	sudo -H -u builder yay --sync --noconfirm "${OTHERPKGDEPS[@]}"
 	
-	sudo -H -u builder makepkg -i
+	sudo -H -u builder makepkg --install --noconfirm
 	cp ./*.pkg.tar.zst "${INPUT_PKGDIR:-.}"
 }
 

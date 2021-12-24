@@ -24,6 +24,7 @@ echo "builder ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
 chmod -R a+rw .
 
 BASEDIR="$PWD"
+echo "BASEDIR: $BASEDIR"
 cd "${INPUT_PKGDIR:-.}"
 
 # Just generate .SRCINFO
@@ -41,10 +42,13 @@ function recursive_build () {
 	sudo -u builder makepkg --printsrcinfo > .SRCINFO
 	mapfile -t OTHERPKGDEPS < \
 		<(sed -n -e 's/^[[:space:]]*\(make\)\?depends\(_x86_64\)\? = \([[:alnum:][:punct:]]*\)[[:space:]]*$/\3/p' .SRCINFO)
-	sudo -H -u builder yay --sync --noconfirm --needed "${OTHERPKGDEPS[@]}"
+	sudo -H -u builder yay --sync --noconfirm --needed --builddir="$BASEDIR" "${OTHERPKGDEPS[@]}"
 	
 	sudo -H -u builder makepkg --install --noconfirm
-	cp ./*.pkg.tar.zst "${INPUT_PKGDIR:-.}"
+	[ -d "$BASEDIR/local/" ] || mkdir "$BASEDIR/local/"
+	packages=( "*.tar.zst" )
+	echo "build: $packages"
+	cp ./*.pkg.tar.zst "$BASEDIR/local/"
 }
 
 # Optionally install dependencies from AUR
@@ -70,7 +74,7 @@ if [ -n "${INPUT_AURDEPS:-}" ]; then
 	done
 	cd "$CURDIR"
 	
-	sudo -H -u builder yay --sync --noconfirm --needed "${PKGDEPS[@]}"
+	sudo -H -u builder yay --sync --noconfirm --needed --builddir="$BASEDIR" "${PKGDEPS[@]}"
 fi
 
 # Build packages

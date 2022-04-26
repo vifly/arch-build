@@ -46,21 +46,11 @@ function recursive_build () {
 	
 	sudo -H -u builder makepkg --install --noconfirm
 	[ -d "$BASEDIR/local/" ] || mkdir "$BASEDIR/local/"
-	packages=( "*.tar.zst" )
-	echo "build: $packages"
 	cp ./*.pkg.tar.zst "$BASEDIR/local/"
 }
 
 # Optionally install dependencies from AUR
 if [ -n "${INPUT_AURDEPS:-}" ]; then
-	# First install yay
-	pacman -S --noconfirm --needed git
-	git clone https://aur.archlinux.org/yay.git /tmp/yay
-	pushd /tmp/yay
-	chmod -R a+rw .
-	sudo -H -u builder makepkg --syncdeps --install --noconfirm
-	popd
-
 	# Extract dependencies from .SRCINFO (depends or depends_x86_64) and install
 	mapfile -t PKGDEPS < \
 		<(sed -n -e 's/^[[:space:]]*\(make\)\?depends\(_x86_64\)\? = \([[:alnum:][:punct:]]*\)[[:space:]]*$/\3/p' .SRCINFO)

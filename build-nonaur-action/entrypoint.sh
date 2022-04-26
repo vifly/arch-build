@@ -4,21 +4,21 @@ set -euo pipefail
 FILE="$(basename "$0")"
 
 # Enable the multilib repository
-sudo cat << EOM >> /etc/pacman.conf
+cat << EOM >> /etc/pacman.conf
 [multilib]
 Include = /etc/pacman.d/mirrorlist
 EOM
 
-sudo pacman -Syu --noconfirm --needed base-devel
+pacman -Syu --noconfirm --needed base-devel
 
 # Makepkg does not allow running as root
 # Create a new user `builder`
 # `builder` needs to have a home directory because some PKGBUILDs will try to
 # write to it (e.g. for cache)
-sudo useradd builder -m
+useradd builder -m
 # When installing dependencies, makepkg will use sudo
 # Give user `builder` passwordless sudo access
-sudo echo "builder ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
+echo "builder ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
 
 # Give all users (particularly builder) full access to these files
 chmod -R a+rw .

@@ -9,7 +9,7 @@ jobs:
   buildAUR:
     strategy:
       matrix:
-        repos: [osu-lazer, weechat-notify-send, fpp, redsocks, drill, redis-desktop-manager, git-cola, makedeb, f3d]
+        repos: [osu-lazer, weechat-notify-send, fpp, redsocks, drill, redis-desktop-manager, git-cola, makedeb, f3d, ncnn]
 
       fail-fast: false
       

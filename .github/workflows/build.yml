@@ -9,7 +9,7 @@ jobs:
   buildAUR:
     strategy:
       matrix:
-        repos: [osu-lazer, weechat-notify-send, fpp, redsocks, drill, redis-desktop-manager, git-cola, makedeb, f3d, ncnn, qbittorrent-qt5]
+        repos: [osu-lazer, weechat-notify-send, fpp, redsocks, drill, git-cola, makedeb, qbittorrent-qt5]
 
       fail-fast: false
       
@@ -22,10 +22,11 @@ jobs:
       with:
         repo-name: ${{ matrix.repos }}
     
-    - uses: actions/upload-artifact@v2
+    - uses: actions/upload-artifact@v3
       with:
         path: ./*/*.pkg.tar.zst
         name: ${{ matrix.repos }}
+        if-no-files-found: error
         
     - uses: ncipollo/release-action@v1
       with:
@@ -53,10 +54,11 @@ jobs:
           pkgdir: ${{ matrix.PKGBUILDs }}
           aurDeps: true
           
-      - uses: actions/upload-artifact@v2
+      - uses: actions/upload-artifact@v3
         with:
           path: ./*/*.pkg.tar.zst
           name: ${{ matrix.PKGBUILDs }}
+          if-no-files-found: error
       
       - uses: ncipollo/release-action@v1
         with:

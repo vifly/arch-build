@@ -37,7 +37,7 @@ jobs:
   buildNonAUR:
     strategy:
       matrix:
-        PKGBUILDs: [breeze10, python-octodns]
+        PKGBUILDs: [breeze10, python-octodns, python-pyclipper]
 
       fail-fast: false
       

@@ -1,7 +1,6 @@
 #!/bin/bash
 
 pkgname=$1
-preinstall_pkgs=$2
 
 useradd builder -m
 echo "builder ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
@@ -14,6 +13,9 @@ EOM
 
 pacman-key --init
 pacman -Sy --noconfirm && pacman -S --noconfirm archlinuxcn-keyring
-pacman -Syu --noconfirm yay "$preinstall_pkgs"
+pacman -Syu --noconfirm yay
+if [ ! -z "$INPUT_PREINSTALLPKGS" ]; then
+    pacman -Syu --noconfirm "$INPUT_PREINSTALLPKGS"
+fi
 
 sudo --set-home -u builder yay -S --noconfirm --builddir=./ "$pkgname"

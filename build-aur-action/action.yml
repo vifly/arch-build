@@ -6,8 +6,13 @@ inputs:
   repo-name:
     description: 'AUR repository name to build'
     required: true
+  preinstall-pkgs:
+    description: 'packages need install before build, separated by space'
+    required: false
+    default: ""
 runs:
   using: 'docker'
   image: 'Dockerfile'
   args:
     - ${{ inputs.repo-name }}
+    - ${{ inputs.preinstall-pkgs }}

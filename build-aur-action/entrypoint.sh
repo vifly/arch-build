@@ -13,6 +13,6 @@ EOM
 
 pacman-key --init
 pacman -Sy --noconfirm && pacman -S --noconfirm archlinuxcn-keyring
-pacman -S --noconfirm yay
+pacman -Syu --noconfirm yay
 
 sudo --set-home -u builder yay -S --noconfirm --builddir=./ "$pkgname"

@@ -9,10 +9,12 @@ jobs:
   buildAUR:
     strategy:
       matrix:
-        repos: [osu-lazer, weechat-notify-send, fpp, redsocks, drill, git-cola, makedeb, qbittorrent-qt5]
+        repos: [osu-lazer, weechat-notify-send, fpp, redsocks, drill, git-cola, makedeb, qbittorrent-qt5, realesrgan-ncnn-vulkan]
         include:
           - repos: git-cola
             preinstall-pkgs: "at-spi2-core"
+          - repos: realesrgan-ncnn-vulkan
+            preinstall-pkgs: "vulkan-intel"
 
       fail-fast: false
       

@@ -10,6 +10,9 @@ jobs:
     strategy:
       matrix:
         repos: [osu-lazer, weechat-notify-send, fpp, redsocks, drill, git-cola, makedeb, qbittorrent-qt5]
+        include:
+          - repos: git-cola
+            preinstall-pkgs: "at-spi2-core"
 
       fail-fast: false
       
@@ -21,6 +24,7 @@ jobs:
     - uses: ./build-aur-action
       with:
         repo-name: ${{ matrix.repos }}
+        preinstallPkgs: ${{ matrix.preinstall-pkgs }}
     
     - uses: actions/upload-artifact@v3
       with:

@@ -21,7 +21,7 @@ jobs:
     runs-on: ubuntu-latest
     
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3
     
     - uses: ./build-aur-action
       with:
@@ -51,7 +51,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
 
       - name: Build Non-AUR packages
         id: makepkg
@@ -79,9 +79,9 @@ jobs:
     needs: [buildAUR, buildNonAUR]
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       
-      - uses: actions/download-artifact@v2
+      - uses: actions/download-artifact@v3
         id: download
       
       - uses: ./create-db-and-upload-action

@@ -9,7 +9,7 @@ jobs:
   buildAUR:
     strategy:
       matrix:
-        repos: [osu-lazer, weechat-notify-send, fpp, redsocks, drill, git-cola, makedeb, qbittorrent-qt5, realesrgan-ncnn-vulkan]
+        repos: [osu-lazer, weechat-notify-send, fpp, redsocks, drill, git-cola, makedeb, qbittorrent-qt5, realesrgan-ncnn-vulkan, python-octodns]
         include:
           - repos: git-cola
             preinstall-pkgs: "at-spi2-core"
@@ -44,7 +44,7 @@ jobs:
   buildNonAUR:
     strategy:
       matrix:
-        PKGBUILDs: [breeze10, python-octodns, python-pyclipper]
+        PKGBUILDs: [breeze10, python-pyclipper]
 
       fail-fast: false
       

@@ -7,9 +7,13 @@ FILE="$(basename "$0")"
 cat << EOM >> /etc/pacman.conf
 [multilib]
 Include = /etc/pacman.d/mirrorlist
+[archlinuxcn]
+Server = https://repo.archlinuxcn.org/x86_64
 EOM
 
-pacman -Syu --noconfirm --needed base-devel
+pacman-key --init
+pacman -Sy --noconfirm && pacman -S --noconfirm archlinuxcn-keyring
+pacman -Syu --noconfirm --needed base-devel yay
 
 # Makepkg does not allow running as root
 # Create a new user `builder`

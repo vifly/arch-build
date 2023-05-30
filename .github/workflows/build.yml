@@ -9,14 +9,12 @@ jobs:
   buildAUR:
     strategy:
       matrix:
-        repos: [osu-lazer, weechat-notify-send, fpp, redsocks, drill, git-cola, qbittorrent-qt5, realesrgan-ncnn-vulkan, python-octodns, nexttrace]
+        repos: [osu-lazer, weechat-notify-send, fpp, redsocks, drill, git-cola, qbittorrent-qt5, realesrgan-ncnn-vulkan, nexttrace, nomacs]
         include:
           - repos: git-cola
             preinstall-pkgs: "at-spi2-core"
           - repos: realesrgan-ncnn-vulkan
             preinstall-pkgs: "vulkan-intel"
-          - repos: python-octodns
-            preinstall-pkgs: "python-pip"
 
       fail-fast: false
       

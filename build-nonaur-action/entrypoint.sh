@@ -13,7 +13,7 @@ EOM
 
 pacman-key --init
 pacman -Sy --noconfirm && pacman -S --noconfirm archlinuxcn-keyring
-pacman -Syu --noconfirm --needed base-devel yay
+pacman -Syu --noconfirm --needed yay
 
 # Makepkg does not allow running as root
 # Create a new user `builder`
@@ -138,3 +138,5 @@ function namcap_check() {
 if [ -z "${INPUT_NAMCAPDISABLE:-}" ]; then
 	namcap_check
 fi
+
+python3 ./build-nonaur-action/encode_name.py

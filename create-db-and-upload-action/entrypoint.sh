@@ -24,7 +24,6 @@ fi
 
 cd upload_packages || exit 1
 
-python3 $init_path/create-db-and-upload-action/decode_name.py
 repo-add "./${repo_name:?}.db.tar.gz" ./*.tar.zst
 python3 $init_path/create-db-and-upload-action/sync.py
 rm "./${repo_name:?}.db.tar.gz"

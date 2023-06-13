@@ -9,7 +9,7 @@ jobs:
   buildAUR:
     strategy:
       matrix:
-        repos: [osu-lazer, weechat-notify-send, fpp, redsocks, drill, git-cola, qbittorrent-qt5, realesrgan-ncnn-vulkan, nexttrace]
+        repos: [osu-lazer, weechat-notify-send, fpp, redsocks, drill, git-cola, qbittorrent-qt5, realesrgan-ncnn-vulkan, nexttrace, nomacs]
         include:
           - repos: git-cola
             preinstall-pkgs: "at-spi2-core"

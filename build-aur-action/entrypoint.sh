@@ -19,4 +19,5 @@ if [ ! -z "$INPUT_PREINSTALLPKGS" ]; then
 fi
 
 sudo --set-home -u builder yay -S --noconfirm --builddir=./ "$pkgname"
-python3 ./build-aur-action/encode_name.py
+cd "./$pkgname" || exit 1
+python3 ../build-aur-action/encode_name.py

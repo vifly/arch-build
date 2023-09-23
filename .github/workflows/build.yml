@@ -44,7 +44,7 @@ jobs:
   buildNonAUR:
     strategy:
       matrix:
-        PKGBUILDs: [breeze10, python-pyclipper]
+        PKGBUILDs: [breeze10]
 
       fail-fast: false
       

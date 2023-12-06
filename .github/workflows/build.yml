@@ -9,7 +9,7 @@ jobs:
   buildAUR:
     strategy:
       matrix:
-        repos: [rustic, powershell-bin]
+        repos: [adduser-deb, carapace-bin, rustic, powershell-bin]
 
       fail-fast: false
       

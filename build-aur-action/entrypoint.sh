@@ -18,6 +18,6 @@ if [ ! -z "$INPUT_PREINSTALLPKGS" ]; then
     pacman -Syu --noconfirm "$INPUT_PREINSTALLPKGS"
 fi
 
-sudo --set-home -u builder paru -S --noconfirm --clonedir=./ "$pkgname"
+sudo --set-home -u builder PATH="/usr/bin/vendor_perl:$PATH" paru -S --noconfirm --clonedir=./ "$pkgname"
 cd "./$pkgname" || exit 1
 python3 ../build-aur-action/encode_name.py

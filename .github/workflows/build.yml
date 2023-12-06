@@ -86,8 +86,8 @@ jobs:
           RCLONE_ONEDRIVE_REGION: global
           RCLONE_ONEDRIVE_TOKEN: ${{ secrets.RCLONE_ONEDRIVE_TOKEN }}
           RCLONE_ONEDRIVE_DRIVE_ID: ${{ secrets.RCLONE_ONEDRIVE_DRIVE_ID }}
-          RCLONE_ONEDRIVE_DRIVE_TYPE: personal
-          dest_path: /archrepo
-          repo_name: vifly
+          RCLONE_ONEDRIVE_DRIVE_TYPE: business
+          dest_path: /repo/arch
+          repo_name: hilebert
           gpg-privatekey: ${{ secrets.gpg_private_key }}
           local_path: ${{ steps.download.outputs.download-path }}

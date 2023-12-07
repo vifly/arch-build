@@ -1,6 +1,6 @@
 # Maintainer: Shapiro <shapiro at quantentunnel dot de>
 
-pkgname='veracrypt'
+pkgname='veracrypt-inyourlanguage'
 _pkgname='VeraCrypt'
 pkgver=1.26.7
 pkgrel=8

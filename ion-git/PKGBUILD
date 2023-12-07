@@ -8,6 +8,7 @@ pkgdesc="The Ion Shell. Compatible with Redox and Linux. (Git version)"
 arch=("x86_64" "i686")
 url="https://gitlab.redox-os.org/redox-os/ion"
 license=('MIT')
+depends=('gcc-libs' 'glibc')
 makedepends=('git' 'rust')
 provides=("$_pkgname")
 conflicts=("$_pkgname")
@@ -27,7 +28,8 @@ build() {
 
 package() {
   cd $_pkgname
-  mkdir -p "$pkgdir"/usr/{bin,share/doc/ion}
-  DESTDIR="$pkgdir"/usr/bin bash/install.sh
-  cp -r manual/ $pkgdir/usr/share/doc/ion/
+  mkdir -p "$pkgdir"/usr/{bin,share/doc/$_pkgname,share/licenses/$_pkgname}
+  DESTDIR="$pkgdir/usr/bin" bash/install.sh
+  cp -r manual "$pkgdir/usr/share/doc/$_pkgname"
+  install -Dm 644 LICENSE -t "$pkgdir/usr/share/licenses/$_pkgname"
 }

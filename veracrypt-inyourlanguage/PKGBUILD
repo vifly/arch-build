@@ -10,7 +10,7 @@ arch=('x86_64' 'i686' 'arm64' 'armhf' 'aarch64')
 license=('custom')
 provides=('veracrypt')
 conflicts=('veracrypt' 'veracrypt-console-bin' 'veracrypt-git' 'veracrypt-trans')
-depends=('fuse2>=2.8.0' 'wxwidgets-gtk3' 'wxwidgets-common' 'libsm' 'device-mapper' 'bash' 'gcc-libs' 'glibc')
+depends=('fuse2>=2.8.0' 'wxwidgets-gtk3' 'libsm' 'device-mapper')
 makedepends=('git' 'yasm' 'libxml2' 'coreutils' 'pcsclite')
 optdepends=('sudo: mounting encrypted volumes as nonroot users' 'pcsclite: providing support for smartcards')
 source=(https://veracrypt.fr/code/${_pkgname}/snapshot/${_pkgname}_${pkgver}.tar.gz

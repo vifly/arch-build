@@ -9,7 +9,7 @@ jobs:
   buildAUR:
     strategy:
       matrix:
-        repos: [adduser-deb, alist, carapace, davmail, doggo, fselect, rustic, powershell-bin]
+        repos: [adduser-deb, alist, carapace, davmail, doggo, fselect, rustic, powershell-bin, visual-studio-code-insiders-bin]
 
       fail-fast: false
       

@@ -9,7 +9,7 @@ jobs:
   buildAUR:
     strategy:
       matrix:
-        repos: [adduser-deb, alist, carapace, clash-verge-rev-bin, davmail, doggo, fselect, rustic]
+        repos: [adduser-deb, alist, carapace, clash-verge-rev-bin, davmail, doggo, fselect, rustic-rs]
 
       fail-fast: false
       

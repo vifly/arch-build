@@ -27,6 +27,7 @@ build() {
 
 package() {
   cd $_pkgname
-  DESTDIR=/usr/local/bin bash/install.sh
+  mkdir -p "$pkgdir"/usr/{bin,share/doc/ion}
+  DESTDIR="$pkgdir"/usr/bin bash/install.sh
   cp -r manual/ $pkgdir/usr/share/doc/ion/
 }

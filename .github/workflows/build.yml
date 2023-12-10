@@ -9,7 +9,7 @@ jobs:
   buildAUR:
     strategy:
       matrix:
-        repos: [adduser-deb, alist, carapace, clash-verge-rev-bin, davmail, dracut-git, doggo, fselect, networkd-broker, networkd-notify-git, rustic-rs]
+        repos: [adduser-deb, alist, carapace, clash-verge-rev-bin, davmail, dracut-git, doggo, fselect, networkd-broker, networkd-notify-git, pacman-hook-kernel-install, rustic-rs]
 
       fail-fast: false
       
@@ -39,7 +39,7 @@ jobs:
   buildNonAUR:
     strategy:
       matrix:
-        PKGBUILDs: [ion-git, kcm-polkit-kde-git, veracrypt-inyourlanguage]
+        PKGBUILDs: [ion-git, veracrypt-inyourlanguage]
 
       fail-fast: false
       

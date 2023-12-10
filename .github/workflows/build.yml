@@ -39,7 +39,7 @@ jobs:
   buildNonAUR:
     strategy:
       matrix:
-        PKGBUILDs: [ion-git, veracrypt-inyourlanguage]
+        PKGBUILDs: [ion-git, kcm-polkit-kde-git, veracrypt-inyourlanguage]
 
       fail-fast: false
       

@@ -9,7 +9,7 @@ jobs:
   buildAUR:
     strategy:
       matrix:
-        repos: [adduser-deb, alist, carapace, clash-verge-rev-bin, davmail, dracut-git, doggo, fselect, networkd-broker, networkd-notify-git, pacman-hook-kernel-install, rustic-rs]
+        repos: [adduser-deb, alist, carapace, clash-verge-rev-bin, davmail, doggo, dracut-git, dracut-numlock, fselect,  mpris-proxy-service, networkd-broker, networkd-notify-git, paccache-hook, pacman-hook-kernel-install, playerctld-systemd-unit, rustic-rs, vrms-arch-git]
 
       fail-fast: false
       

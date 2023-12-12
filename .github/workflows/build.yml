@@ -39,7 +39,7 @@ jobs:
   buildNonAUR:
     strategy:
       matrix:
-        PKGBUILDs: [ion-git, java-openjfx, qtjambi, veracrypt-inyourlanguage]
+        PKGBUILDs: [ion-git, java-openjfx, veracrypt-inyourlanguage]
 
       fail-fast: false
       

@@ -8,7 +8,7 @@ pkgdesc="Rust implementation of findutils"
 arch=('x86_64')
 url='https://github.com/uutils/findutils'
 license=('MIT')
-makedepends=('rust')
+makedepends=('clang15' 'rust')
 source=("$pkgname-$pkgver.tar.gz::$url/archive/$pkgver.tar.gz")
 sha512sums=('4bef3db72985158dd89ff7bd4022e264dff840981d72671b1deafad606b9cbe98d55860c1561c2833475f8021d47fddaac1913bd3c6e93bec76754b935629c7b')
 
@@ -23,12 +23,12 @@ build() {
 }
 
 check() {
-    cd $pkgname-$pkgver
+    cd $_pkgname-$pkgver
     cargo test --frozen --all-features
 }
 
 package() {
-  cd $pkgname-$pkgver
+  cd $_pkgname-$pkgver
   find target/release -maxdepth 1 -executable -type f -exec install -Dm 755 -t "$pkgdir/usr/bin/" {} +
   install -Dm 644 LICENSE -t "$pkgdir/usr/share/licenses/$pkgname"
 }

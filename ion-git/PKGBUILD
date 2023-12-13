@@ -38,6 +38,7 @@ check() {
 
 package() {
   cd "$_pkgname"
+  mkdir "$pkgdir/usr/bin"
   DESTDIR="$pkgdir/usr/bin" bash/install.sh
   cp -r manual "$pkgdir/usr/share/doc/$_pkgname"
   install -Dm644 LICENSE "$pkgdir/usr/share/licenses/$_pkgname"

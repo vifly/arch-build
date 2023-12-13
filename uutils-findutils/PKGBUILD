@@ -29,6 +29,6 @@ check() {
 
 package() {
   cd $_pkgname-$pkgver
-  find target/release -maxdepth 1 -executable -type f -exec install -Dm 755 -t "$pkgdir/usr/bin/" {} +
+  install -Dm 755 target/release/{find,xargs} -t "$pkgdir/usr/bin/"
   install -Dm 644 LICENSE -t "$pkgdir/usr/share/licenses/$pkgname"
 }

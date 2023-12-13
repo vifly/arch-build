@@ -16,19 +16,28 @@ source=('git+https://gitlab.redox-os.org/redox-os/ion.git')
 sha512sums=('SKIP')
 
 pkgver() {
-  cd $_pkgname
+  cd "$_pkgname"
   printf "r%s.%s" "$(git rev-list --count HEAD)" "$(git rev-parse --short HEAD)"
 }
 
+prepare() {
+  cd "$_pkgname"
+  cargo fetch --locked --target "$(rustc -vV | sed -n 's/host: //p')"
+}
+
 build() {
-  cd $_pkgname
-  cargo build --release 
+  cd "$_pkgname"
+  cargo build --frozen --release --all-features
+}
+
+check() {
+  cd "$_pkgname"
+  cargo test --frozen --all-features
 }
 
 package() {
-  cd $_pkgname
-  mkdir -p "$pkgdir"/usr/{bin,share/doc/$_pkgname,share/licenses/$_pkgname}
+  cd "$_pkgname"
   DESTDIR="$pkgdir/usr/bin" bash/install.sh
   cp -r manual "$pkgdir/usr/share/doc/$_pkgname"
-  install -Dm 644 LICENSE -t "$pkgdir/usr/share/licenses/$_pkgname"
+  install -Dm644 LICENSE "$pkgdir/usr/share/licenses/$_pkgname"
 }

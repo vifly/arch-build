@@ -33,7 +33,7 @@ build() {
 
 check() {
   cd "$_pkgname"
-  cargo test --workspace --frozen
+  cargo test --frozen
 }
 
 package() {

@@ -9,7 +9,7 @@ jobs:
   buildAUR:
     strategy:
       matrix:
-        repos: [adduser-deb, alist, carapace, clash-verge-rev-bin, davmail, doggo, dracut-git, dracut-numlock, fselect, memstrack, mpris-proxy-service, networkd-broker, networkd-notify-git, paccache-hook, pacman-hook-kernel-install, playerctld-systemd-unit, rustic-rs, swt, vrms-arch-git]
+        repos: [adduser-deb, alist, carapace, clash-verge-rev-bin, davmail, doggo, dracut-git, dracut-numlock, fcitx5-pinyin-cedict, fcitx5-pinyin-custom-pinyin-dictionary, fcitx5-pinyin-chinese-idiom, fcitx5-pinyin-sougou, fselect, memstrack, mpris-proxy-service, networkd-broker, networkd-notify-git, paccache-hook, pacman-hook-kernel-install, playerctld-systemd-unit, rustic-rs, swt, vrms-arch-git]
 
       fail-fast: false
       

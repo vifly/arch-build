@@ -27,7 +27,7 @@ prepare() {
 
 build() {
   cd "$_pkgname"
-  cargo build --workspace --frozen --release --features man,unicode
+  cargo build --workspace --frozen --release --features man
 
 }
 

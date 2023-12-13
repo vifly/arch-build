@@ -1,4 +1,4 @@
-# Maintainer: Scheme Matrix <schemematrix (at) outlook (dot) comz>
+# Maintainer: Scheme Matrix <schemematrix (at) outlook (dot) com>
 
 _pkgname=findutils
 pkgname=uutils-$_pkgname

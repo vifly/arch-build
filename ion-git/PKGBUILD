@@ -27,13 +27,13 @@ prepare() {
 
 build() {
   cd "$_pkgname"
-  cargo build --workspace --frozen --release --features man
+  cargo build --workspace --frozen --release
 
 }
 
 check() {
   cd "$_pkgname"
-  cargo test --workspace --frozen --features man,unicode
+  cargo test --workspace --frozen
 }
 
 package() {

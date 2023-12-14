@@ -12,7 +12,7 @@ makedepends=('git' 'rust')
 provides=("$_pkgname")
 conflicts=("$_pkgname")
 install=ion-git.install
-source=('git+https://gitlab.redox-os.org/redox-os/ion.git')
+source=("git+$url.git")
 sha512sums=('SKIP')
 
 pkgver() {
@@ -27,19 +27,21 @@ prepare() {
 
 build() {
   cd "$_pkgname"
-  cargo build --workspace --frozen --release
-
+  cargo build --frozen --release
+  make manual
 }
 
 check() {
   cd "$_pkgname"
-  cargo test --workspace
+  DEBUG=1 RUSTUP=0 make tests
 }
 
 package() {
   cd "$_pkgname"
-  mkdir -p "$pkgdir/usr/share/doc/$_pkgname"
-  DESTDIR="$pkgdir/usr/bin" bash/install.sh
+  install -Dm 755 "target/release/$_pkgname" -t "$pkgdir/usr/bin"
+  install -Dm 644 LICENSE -t "$pkgdir/usr/share/licenses/$_pkgname"
+  find manual/builtins -maxdepth 1 -name '*.1' -type f -exec install -Dm 644 -t "$pkgdir/usr/share/$_pkgname/man/man1" {} +
+  rm -r manual/builtins
+  install -dm 755 "$pkgdir/usr/share/doc/$_pkgname"
   cp -r manual "$pkgdir/usr/share/doc/$_pkgname"
-  install -Dm644 LICENSE "$pkgdir/usr/share/licenses/$_pkgname"
 }

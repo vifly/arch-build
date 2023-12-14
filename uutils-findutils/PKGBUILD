@@ -29,6 +29,6 @@ check() {
 
 package() {
   cd "$_pkgname-$pkgver"
-  install -Dm755 target/release/{find,xargs} -t "$pkgdir/usr/bin/"
-  install -Dm644 LICENSE "$pkgdir/usr/share/licenses/$pkgname"
+  for utility in {find,xargs}; do install -Dm 755 "target/release/$utility" "$pkgdir/usr/bin/uu-$utility"; done
+  install -Dm 644 LICENSE -t "$pkgdir/usr/share/licenses/$pkgname"
 }

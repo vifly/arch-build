@@ -9,8 +9,35 @@ jobs:
   buildAUR:
     strategy:
       matrix:
-        repos: [adduser-deb, alist, carapace, clash-verge-rev-bin, davmail, doggo, dracut-git, dracut-numlock, fcitx5-pinyin-cedict, fcitx5-pinyin-custom-pinyin-dictionary, fcitx5-pinyin-chinese-idiom, fcitx5-pinyin-sougou, fselect, memstrack, mpris-proxy-service, networkd-broker, networkd-notify-git, p3wm, paccache-hook, pacman-hook-kernel-install, playerctld-systemd-unit, rustic-rs, swt, vrms-arch-git]
-
+        repos:
+          - adduser-deb
+          - alist
+          - carapace
+          - clash-verge-rev-bin
+          - davmail
+          - doggo
+          - dracut-git
+          - dracut-numlock
+          - fcitx5-pinyin-cedict
+          - fcitx5-pinyin-custom-pinyin-dictionary
+          - fcitx5-pinyin-chinese-idiom
+          - fcitx5-pinyin-sougou
+          - fselect
+          - memstrack
+          - mpris-proxy-service
+          - networkd-broker
+          - networkd-notify-git
+          - paccache-hook
+          - pacman-hook-kernel-install
+          - playerctld-systemd-unit
+          - ripgrep-all-git
+          - rustic-rs
+          - swt
+          - vrms-arch-git
+        include:
+          - repos: ripgrep-all-git
+            preinstall-pkgs: "poppler"
+            
       fail-fast: false
       
     runs-on: ubuntu-latest
@@ -39,7 +66,10 @@ jobs:
   buildNonAUR:
     strategy:
       matrix:
-        PKGBUILDs: [ion-git, java-openjfx, uutils-findutils, veracrypt-inyourlanguage]
+        PKGBUILDs:
+          - ion-git
+          - java-openjfx
+          - veracrypt-inyourlanguage
 
       fail-fast: false
       

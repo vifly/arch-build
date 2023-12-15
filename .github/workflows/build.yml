@@ -65,7 +65,7 @@ jobs:
         with:
           allowUpdates: true
           tag: "packages"
-          artifacts: ${{ steps.makepkg.outputs.pkgfile0 }}
+          artifacts: "./*/*.zst"
           token: ${{ secrets.GITHUB_TOKEN }}
           
   uploadToOneDrive:      

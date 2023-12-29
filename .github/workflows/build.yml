@@ -33,6 +33,7 @@ jobs:
           - ripgrep-all-git
           - rustic-rs
           - swt
+          - watchman
         include:
           - repos: ripgrep-all-git
             preinstall-pkgs: "poppler"

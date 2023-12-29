@@ -13,7 +13,6 @@ jobs:
           - adduser-deb
           - alist
           - carapace
-          - clash-verge-rev-bin
           - davmail
           - doggo
           - dracut-git
@@ -23,6 +22,7 @@ jobs:
           - fcitx5-pinyin-chinese-idiom
           - fcitx5-pinyin-sougou
           - fselect
+          - kopia
           - memstrack
           - mpris-proxy-service
           - networkd-broker
@@ -33,29 +33,28 @@ jobs:
           - ripgrep-all-git
           - rustic-rs
           - swt
-          - vrms-arch-git
         include:
           - repos: ripgrep-all-git
             preinstall-pkgs: "poppler"
-            
+
       fail-fast: false
-      
+
     runs-on: ubuntu-latest
-    
+
     steps:
     - uses: actions/checkout@v3
-    
+
     - uses: ./build-aur-action
       with:
         repo-name: ${{ matrix.repos }}
         preinstallPkgs: ${{ matrix.preinstall-pkgs }}
-    
+
     - uses: actions/upload-artifact@v3
       with:
         path: ./*/*.pkg.tar.zst
         name: ${{ matrix.repos }}
         if-no-files-found: error
-        
+
     - uses: ncipollo/release-action@v1
       with:
         allowUpdates: true
@@ -69,10 +68,10 @@ jobs:
         PKGBUILDs:
           - ion-git
           - java-openjfx
-          - veracrypt-inyourlanguage
+          - veracrypt-updated
 
       fail-fast: false
-      
+
     runs-on: ubuntu-latest
 
     steps:
@@ -84,31 +83,31 @@ jobs:
         with:
           pkgdir: ${{ matrix.PKGBUILDs }}
           aurDeps: true
-          
+
       - uses: actions/upload-artifact@v3
         with:
           path: ./*/*.pkg.tar.zst
           name: ${{ matrix.PKGBUILDs }}
           if-no-files-found: error
-      
+
       - uses: ncipollo/release-action@v1
         with:
           allowUpdates: true
           tag: "packages"
           artifacts: "./*/*.zst"
           token: ${{ secrets.GITHUB_TOKEN }}
-          
-  uploadToOneDrive:      
+
+  uploadToOneDrive:
     runs-on: ubuntu-latest
     if: always()
     needs: [buildAUR, buildNonAUR]
 
     steps:
       - uses: actions/checkout@v3
-      
+
       - uses: actions/download-artifact@v3
         id: download
-      
+
       - uses: ./create-db-and-upload-action
         with:
           RCLONE_ONEDRIVE_CLIENT_ID: ${{ secrets.RCLONE_ONEDRIVE_CLIENT_ID }}

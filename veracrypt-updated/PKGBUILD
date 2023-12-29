@@ -1,0 +1,34 @@
+# Maintainer: Shapiro <shapiro at quantentunnel dot de>
+
+pkgname='veracrypt-updated'
+_pkgname='VeraCrypt'
+pkgver='1.26.7'
+pkgrel='1'
+pkgdesc='Disk encryption with strong security based on TrueCrypt'
+url='https://www.veracrypt.fr'
+arch=('aarch64' 'arm64' 'armhf' 'i686' 'x86_64')
+license=('LicenseRef-VeraCrypt')
+provides=('veracrypt')
+conflicts=('veracrypt' 'veracrypt-console-bin' 'veracrypt-git' 'veracrypt-inyourlanguage' 'veracrypt-trans')
+depends=('device-mapper' 'fuse2>=2.8.0' 'wxwidgets-common>=3.2.4' 'wxwidgets-gtk3>=3.2.4')
+makedepends=('pcsclite' 'yasm')
+optdepends=('sudo: mounting encrypted volumes as nonroot users' 'pcsclite: providing support for smartcards')
+source=("https://veracrypt.fr/code/${_pkgname}/snapshot/${_pkgname}_${pkgver}.tar.gz")
+sha512sums=('c803c6301a8a7b6d8efc74284070c01629a760dceaa518f2287d62709bd25450fec75f2fa0e2ab0eb57993faec9cba4d51104273a56a88fa288a1e14bcf868bd')
+
+build() {
+  cd "${_pkgname}_${pkgver}/src"
+  make PKG_CONFIG_PATH='/usr/lib/pkgconfig' \
+       WX_CONFIG='/usr/bin/wx-config' \
+       TC_EXTRA_LFLAGS="${LDFLAGS}" \
+       TC_EXTRA_CXXFLAGS="${CXXFLAGS} ${CPPFLAGS}" \
+       TC_EXTRA_CFLAGS="${CFLAGS} ${CPPFLAGS}"
+}
+
+package() {
+  cd "${_pkgname}_${pkgver}/src"
+  make DESTDIR="${pkgdir}" install
+  install -Dm 644 License.txt -t "${pkgdir}/usr/share/licenses/veracrypt"
+  rm "${pkgdir}/usr/bin/veracrypt-uninstall.sh"
+  rm "${pkgdir}/usr/share/doc/veracrypt/License.txt"
+}

@@ -23,7 +23,6 @@ jobs:
           - fcitx5-pinyin-sougou
           - fselect
           - kopia
-          - memstrack
           - mpris-proxy-service
           - networkd-broker
           - networkd-notify-git

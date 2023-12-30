@@ -18,17 +18,13 @@ sha512sums=('c803c6301a8a7b6d8efc74284070c01629a760dceaa518f2287d62709bd25450fec
 
 build() {
   cd "${_pkgname}_${pkgver}/src"
-  make PKG_CONFIG_PATH='/usr/lib/pkgconfig' \
-       WX_CONFIG='/usr/bin/wx-config' \
-       TC_EXTRA_LFLAGS="${LDFLAGS}" \
-       TC_EXTRA_CXXFLAGS="${CXXFLAGS} ${CPPFLAGS}" \
-       TC_EXTRA_CFLAGS="${CFLAGS} ${CPPFLAGS}"
+  make PKG_CONFIG_PATH='/usr/lib/pkgconfig' WX_CONFIG='/usr/bin/wx-config' TC_EXTRA_LFLAGS="${LDFLAGS}" TC_EXTRA_CXXFLAGS="${CXXFLAGS} ${CPPFLAGS}" TC_EXTRA_CFLAGS="${CFLAGS} ${CPPFLAGS}"
 }
 
 package() {
   cd "${_pkgname}_${pkgver}/src"
   make DESTDIR="${pkgdir}" install
-  install -Dm 644 License.txt -t "${pkgdir}/usr/share/licenses/veracrypt"
+  install -Dm 644 License.txt "${pkgdir}/usr/share/licenses/veracrypt/License"
   rm "${pkgdir}/usr/bin/veracrypt-uninstall.sh"
   rm "${pkgdir}/usr/share/doc/veracrypt/License.txt"
 }

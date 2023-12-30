@@ -22,12 +22,12 @@ jobs:
           - fcitx5-pinyin-chinese-idiom
           - fcitx5-pinyin-sougou
           - fselect
+          - kernel-install-for-dracut
           - kopia
           - mpris-proxy-service
           - networkd-broker
           - networkd-notify-git
           - paccache-hook
-          - pacman-hook-kernel-install
           - playerctld-systemd-unit
           - ripgrep-all-git
           - rustic-rs

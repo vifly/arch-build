@@ -69,6 +69,7 @@ jobs:
         PKGBUILDs:
           - ion-git
           - java-openjfx
+          - kopia-ui
           - veracrypt-updated
 
       fail-fast: false

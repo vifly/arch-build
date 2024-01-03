@@ -1,13 +1,13 @@
 # Maintainer: Shapiro <shapiro at quantentunnel dot de>
 
-pkgname='veracrypt-updated'
 _pkgname='VeraCrypt'
+pkgname='veracrypt-updated'
 pkgver='1.26.7'
 pkgrel='1'
 pkgdesc='Disk encryption with strong security based on TrueCrypt'
 url='https://www.veracrypt.fr'
 arch=('aarch64' 'arm64' 'armhf' 'i686' 'x86_64')
-license=('LicenseRef-VeraCrypt')
+license=("LicenseRef-${_pkgname}")
 provides=('veracrypt')
 conflicts=('veracrypt' 'veracrypt-console-bin' 'veracrypt-git' 'veracrypt-inyourlanguage' 'veracrypt-trans')
 depends=('device-mapper' 'fuse2>=2.8.0' 'wxwidgets-common>=3.2.4' 'wxwidgets-gtk3>=3.2.4')

@@ -14,7 +14,6 @@ jobs:
           - alist
           - carapace
           - clash-verge
-          - clash-verge-bin
           - davmail
           - doggo
           - dracut-git

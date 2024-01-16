@@ -12,6 +12,7 @@ Server = https://repo.archlinuxcn.org/x86_64
 EOM
 
 pacman-key --init
+pacman-key --lsign-key "farseerfc@archlinux.org"
 pacman -Sy --noconfirm && pacman -S --noconfirm archlinuxcn-keyring
 pacman -Syu --noconfirm --needed yay
 

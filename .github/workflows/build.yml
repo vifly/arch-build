@@ -71,7 +71,6 @@ jobs:
           - clash-verge
           - ion-git
           - java-openjfx
-          - meta-rules-dat
           - veracrypt-updated
 
       fail-fast: false

@@ -13,7 +13,6 @@ jobs:
           - adduser-deb
           - alist
           - carapace
-          - clash-verge
           - davmail
           - doggo
           - dracut-git
@@ -69,6 +68,7 @@ jobs:
     strategy:
       matrix:
         PKGBUILDs:
+          - clash-verge
           - ion-git
           - java-openjfx
           - meta-rules-dat

@@ -23,6 +23,7 @@ jobs:
           - fcitx5-pinyin-chinese-idiom
           - fcitx5-pinyin-sougou
           - fselect
+          - informant
           - kernel-install-for-dracut
           - kopia
           - kopia-ui-bin
@@ -38,7 +39,7 @@ jobs:
           - watchman
         include:
           - repos: ripgrep-all-git
-            preinstall-pkgs: "poppler"
+            preinstall-pkgs: "pandoc-cli poppler"
 
       fail-fast: false
 

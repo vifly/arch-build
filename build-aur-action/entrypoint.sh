@@ -32,7 +32,7 @@ pacman-key --lsign-key "farseerfc@archlinux.org"
 pacman -Sy --noconfirm && pacman -S --noconfirm archlinuxcn-keyring
 pacman -Syu --noconfirm paru
 if [ ! -z "$INPUT_PREINSTALLPKGS" ]; then
-    pacman -Syu --noconfirm "$INPUT_PREINSTALLPKGS"
+    pacman -Syu --noconfirm ${INPUT_PREINSTALLPKGS}
 fi
 
 sudo --set-home -u builder PATH="/usr/bin/vendor_perl:$PATH" paru -S --noconfirm --clonedir=./ "$pkgname"

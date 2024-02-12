@@ -18,7 +18,6 @@ jobs:
           - doggo
           - dracut-git
           - dracut-numlock
-          - fcitx5-pinyin-cedict
           - fcitx5-pinyin-custom-pinyin-dictionary
           - fcitx5-pinyin-chinese-idiom
           - fcitx5-pinyin-sougou

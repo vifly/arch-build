@@ -4,6 +4,7 @@ RUN ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
 RUN date
 RUN pacman -Syu --noconfirm
 RUN pacman -S base-devel git python --noconfirm
+RUN chmod +x ./entrypoint.sh
 
 COPY entrypoint.sh /entrypoint.sh
 

@@ -44,7 +44,7 @@ jobs:
   uploadToOneDrive:      
     runs-on: ubuntu-latest
     if: always()
-    needs: [buildAUR, buildNonAUR]
+    needs: [buildAUR]
 
     steps:
       - uses: actions/checkout@v3

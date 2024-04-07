@@ -23,10 +23,8 @@ Server = https://mirrors.ocf.berkeley.edu/archlinuxcn/\$arch
 Server = https://archlinux.ccns.ncku.edu.tw/archlinuxcn/\$arch
 EOM
 
-pacman-key --init
-pacman-key --lsign-key "farseerfc@archlinux.org"
-pacman -Sy --noconfirm && pacman -S --noconfirm archlinuxcn-keyring
-pacman -Syu --noconfirm --needed paru
+pacman -Syu --noconfirm archlinuxcn-keyring
+pacman -Syu --noconfirm paru
 
 # Makepkg does not allow running as root
 # Create a new user `builder`

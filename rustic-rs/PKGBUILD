@@ -1,0 +1,35 @@
+# Maintainer: Daniele Basso <d dot bass05 at proton dot me>
+
+_pkgname='rustic'
+pkgname="${_pkgname}-rs"
+pkgver='0.7.0'
+pkgrel='1'
+pkgdesc='Fast, encrypted, deduplicated backups powered by Rust'
+arch=('x86_64')
+url="https://github.com/${pkgname}/${_pkgname}"
+license=('MIT OR Apache-2.0')
+makedepends=('rust')
+options=('!lto')
+source=("${pkgname}-${pkgver}.tar.gz::https://static.crates.io/crates/${pkgname}/${pkgname}-${pkgver}.crate")
+b2sums=('ef8aecdf9f66fe098a3dd5879bfb29d5ac392937765664467d844c5966d9b7f0be024ab603117ddecb638c1f101ee3d7104272c698d10add133f700c77622144')
+
+prepare() {
+    cd "${pkgname}-${pkgver}"
+    cargo fetch --locked --target "$(rustc -vV | sed -n 's/host: //p')"
+}
+
+build() {
+    cd "${pkgname}-${pkgver}"
+    cargo build --frozen --release #--all-features
+}
+
+check() {
+    cd "${pkgname}-${pkgver}"
+    cargo test --frozen #--all-features
+}
+
+package() {
+    cd "${pkgname}-${pkgver}"
+    install -Dm 0755 "target/release/${_pkgname}" -t "${pkgdir}/usr/bin"
+    install -Dm 0644 'LICENSE-MIT' "${pkgdir}/usr/share/licenses/${pkgname}/LICENSE"
+}

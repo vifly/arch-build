@@ -11,6 +11,7 @@ license=('MIT')
 makedepends=('git' 'rust')
 provides=("${_pkgname}")
 conflicts=("${_pkgname}")
+options=('!lto')
 install="${pkgname}.install"
 source=("git+${url}.git")
 sha512sums=('SKIP')
@@ -27,20 +28,27 @@ prepare() {
 
 build() {
     cd "${_pkgname}"
-    cargo build --frozen --release
-    make manual
+    mkdir manual/builtins
+    cargo build --frozen --release --features man,unicode
+    echo -n "# Builtin commands" > manual/src/builtins.md
+	for man in manual/builtins/*; do \
+		echo "" >> manual/src/builtins.md; \
+		echo -n "## " >> manual/src/builtins.md; \
+		cat "${man}" >> manual/src/builtins.md; \
+	done
 }
 
 check() {
     cd "${_pkgname}"
-    DEBUG=1 RUSTUP=0 make tests
+    bash tests/run_examples.sh
+    cargo test --workspace --features man,unicode
 }
 
 package() {
     cd "${_pkgname}"
-    install -Dm 755 "target/release/${_pkgname}" -t "${pkgdir}/usr/bin"
-    install -Dm 644 LICENSE -t "${pkgdir}/usr/share/licenses/${_pkgname}"
-    install -dm 755 "${pkgdir}/usr/share/doc/${_pkgname}"
+    install -Dm 0755 "target/release/${_pkgname}" -t "${pkgdir}/usr/bin"
+    install -Dm 0644 LICENSE -t "${pkgdir}/usr/share/licenses/${_pkgname}"
+    install -dm 0755 "${pkgdir}/usr/share/doc/${_pkgname}"
     find 'manual/builtins' -maxdepth 1 -name '*.1' -type f -execdir install -Dm 644 -t "${pkgdir}/usr/share/${_pkgname}/man/man1" "{}" +
     cp -r manual "${pkgdir}/usr/share/doc/${_pkgname}"
     rm -r "${pkgdir}/usr/share/doc/${_pkgname}/manual/builtins"

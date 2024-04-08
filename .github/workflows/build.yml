@@ -17,7 +17,6 @@ jobs:
           - doggo
           - dracut-git
           - dracut-numlock
-          - dracut-ukify
           - fcitx5-pinyin-custom-pinyin-dictionary
           - fcitx5-pinyin-chinese-idiom
           - fcitx5-pinyin-sougou
@@ -27,6 +26,7 @@ jobs:
           - networkd-broker
           - networkd-notify-git
           - paccache-hook
+          - pacman-hook-kernel-install
           - playerctld-systemd-unit
           - swt
           - watchman-bin

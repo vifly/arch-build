@@ -26,6 +26,6 @@ package() {
   make DESTDIR="${pkgdir}" install
   install -Dm 0644 License.txt "${pkgdir}/usr/share/licenses/veracrypt/License"
   rm "${pkgdir}/usr/bin/veracrypt-uninstall.sh"
-  rm "${pkgdir}/usr/sbin/mount.veracrypt"
+  rm -r "${pkgdir}/usr/sbin"
   rm "${pkgdir}/usr/share/doc/veracrypt/License.txt"
 }

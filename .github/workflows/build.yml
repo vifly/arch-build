@@ -12,6 +12,7 @@ jobs:
         repos:
           - adduser-deb
           - alist
+          - apparmor.d-git
           - carapace
           - davmail
           - doggo
@@ -20,7 +21,6 @@ jobs:
           - fcitx5-pinyin-custom-pinyin-dictionary
           - fcitx5-pinyin-chinese-idiom
           - fcitx5-pinyin-sougou
-          - kernel-install-for-dracut
           - linux-zen-versioned-bin
           - mpris-proxy-service
           - networkd-broker
@@ -28,6 +28,7 @@ jobs:
           - paccache-hook
           - pacman-hook-kernel-install
           - playerctld-systemd-unit
+          - remove-orphaned-kernels
           - swt
           - watchman-bin
       fail-fast: false

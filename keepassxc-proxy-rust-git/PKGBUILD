@@ -1,0 +1,40 @@
+# Maintainer: Luca Weiss <luca (at) z3ntu (dot) xyz>
+
+_pkgname='keepassxc-proxy-rust'
+pkgname="${_pkgname}-git"
+pkgver='r1869.9bc52a5'
+pkgrel='1'
+pkgdesc='Application that works as a proxy between Native Messaging browser extension and KeePassXC'
+arch=('x86_64')
+url="https://github.com/varjolintu/${_pkgname}"
+license=('GPL-3.0-or-later')
+makedepends=('git' 'rust')
+provides=("${_pkgname}")
+conflicts=("${_pkgname}")
+source=("git+${url}.git")
+sha512sums=('SKIP')
+
+pkgver() {
+    cd "${_pkgname}"
+    printf 'r%s.%s' "$(git rev-list --count HEAD)" "$(git rev-parse --short HEAD)"
+}
+
+prepare() {
+    cd "${_pkgname}"
+    cargo fetch --locked --target "$(rustc -vV | sed -n 's/host: //p')"
+}
+
+build() {
+    cd "${_pkgname}"
+    cargo build --frozen --release --all-features
+}
+
+check() {
+    cd "${_pkgname}"
+    cargo test --all-features
+}
+
+package() {
+    cd "${_pkgname}"
+    install -Dm 0755 'target/release/keepassxc-proxy' "${pkgdir}/usr/bin/${_pkgname}"
+}

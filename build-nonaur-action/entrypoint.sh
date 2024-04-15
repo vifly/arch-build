@@ -12,19 +12,12 @@ cat << EOM >> /etc/pacman.conf
 Include = /etc/pacman.d/mirrorlist
 [archlinuxcn]
 Server = https://repo.archlinuxcn.org/\$arch
-Server = https://mirrors.xtom.us/archlinuxcn/\$arch
-Server = https://mirrors.xtom.jp/archlinuxcn/\$arch
-Server = https://mirrors.xtom.hk/archlinuxcn/\$arch
-Server = https://mirrors.xtom.nl/archlinuxcn/\$arch
-Server = https://mirrors.xtom.de/archlinuxcn/\$arch
-Server = https://mirrors.xtom.ee/archlinuxcn/\$arch
-Server = https://mirrors.xtom.au/archlinuxcn/\$arch
-Server = https://mirrors.ocf.berkeley.edu/archlinuxcn/\$arch
-Server = https://archlinux.ccns.ncku.edu.tw/archlinuxcn/\$arch
+[chaotic-aur]
+Include = /etc/pacman.d/chaotic-mirrorlist
 EOM
 
-pacman -Syu --noconfirm archlinuxcn-keyring
-pacman -Syu --noconfirm paru
+pacman -Syu --noconfirm archlinuxcn-keyring && pacman -Syu --noconfirm archlinuxcn-mirrorlist-git paru
+sed -i "s|^Server = https://repo.archlinuxcn.org/\$arch|Include = /etc/pacman.d/archlinuxcn-mirrorlist|g" /etc/pacman.conf
 
 # Makepkg does not allow running as root
 # Create a new user `builder`

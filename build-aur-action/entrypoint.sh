@@ -14,6 +14,7 @@ EOM
 pacman-key --init
 pacman-key --lsign-key "farseerfc@archlinux.org"
 pacman -Sy --noconfirm && pacman -S --noconfirm archlinuxcn-keyring
+pacman -Syu --noconfirm archlinux-keyring
 pacman -Syu --noconfirm yay
 if [ ! -z "$INPUT_PREINSTALLPKGS" ]; then
     pacman -Syu --noconfirm "$INPUT_PREINSTALLPKGS"

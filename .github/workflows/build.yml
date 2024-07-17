@@ -13,6 +13,7 @@ jobs:
           - adduser-deb
           - alist
           - apparmor.d-git
+          - backblaze-b2
           - carapace
           - davmail
           - doggo
@@ -21,16 +22,17 @@ jobs:
           - fcitx5-pinyin-custom-pinyin-dictionary
           - fcitx5-pinyin-chinese-idiom
           - fcitx5-pinyin-sougou
+          - linuxqq-nt-bwrap
           - linux-zen-versioned-bin
           - mpris-proxy-service
           - networkd-broker
           - networkd-notify-git
-          - paccache-hook
           - pacman-hook-kernel-install
           - playerctld-systemd-unit
           - remove-orphaned-kernels
           - swt
           - watchman-bin
+          - wechat-universal-bwrap
       fail-fast: false
 
     runs-on: ubuntu-latest

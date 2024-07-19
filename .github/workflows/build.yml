@@ -30,7 +30,6 @@ jobs:
           - playerctld-systemd-unit
           - remove-orphaned-kernels
           - swt
-          - watchman-bin
           - wechat-universal-bwrap
       fail-fast: false
 

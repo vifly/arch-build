@@ -62,6 +62,7 @@ jobs:
       matrix:
         PKGBUILDs:
           - fselect
+          - git-credential-manager
           - ion-git
           - keepassxc-proxy-rust-git
           - rustic-rs

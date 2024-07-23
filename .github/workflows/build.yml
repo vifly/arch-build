@@ -62,11 +62,11 @@ jobs:
       matrix:
         PKGBUILDs:
           - fselect
-          - git-credential-manager
           - ion-git
           - keepassxc-proxy-rust-git
           - rustic-rs
           - veracrypt-updated
+          - yt-dlp-plugin-chromecookieunlock
       fail-fast: false
 
     runs-on: ubuntu-latest

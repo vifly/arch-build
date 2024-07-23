@@ -1,0 +1,35 @@
+# Maintainer: Luis Pérez <luis.perez@protonmail.com>
+# Contributor: djmattyg007 <internet@matthewgamble.net>
+
+pkgname=aqua
+pkgver=2.30.0
+pkgrel=1
+pkgdesc='Declarative CLI Version manager written in Go.'
+arch=('x86_64')
+url="https://github.com/aquaproj/${pkgname}"
+license=('MIT')
+makedepends=('go')
+source=("${pkgname}-${pkgver}.tar.gz::${url}/archive/v${pkgver}.tar.gz")
+sha512sums=('c76a0026f04e551109b519a493109cd9b23b8f21345b86fb46738d0e05d1b333620fb885b679c2a3f1b6db47417fb8128d34e2719bef2f143afc69e5a336cf34')
+
+prepare(){
+  cd "${pkgname}-${pkgver}"
+  mkdir -p 'build/'
+}
+
+build() {
+  cd "${pkgname}-${pkgver}"
+  export CGO_CPPFLAGS="${CPPFLAGS}"
+  export CGO_CFLAGS="${CFLAGS}"
+  export CGO_CXXFLAGS="${CXXFLAGS}"
+  export CGO_LDFLAGS="${LDFLAGS}"
+  export GOPATH="${srcdir}"
+  export GOFLAGS="-buildmode=pie -ldflags='-compressdwarf=false -linkmode=external' -mod=readonly -modcacherw"
+  go build -o "build/${pkgname}" "./cmd/${pkgname}/"
+}
+
+package() {
+  cd "${pkgname}-${pkgver}"
+  install -Dm 0755 "build/${pkgname}" "${pkgdir}"/usr/bin/"${pkgname}"
+  install -Dm 0644 LICENSE -t "${pkgdir}/usr/share/licenses/${pkgname}"
+}

@@ -15,7 +15,7 @@ sha512sums=('c76a0026f04e551109b519a493109cd9b23b8f21345b86fb46738d0e05d1b333620
 prepare(){
   cd "${pkgname}-${pkgver}"
   mkdir build
-  GOFLAGS="-mod=readonly" go mod vendor
+  GOFLAGS="-mod=readonly" go mod vendor -v
 }
 
 build() {

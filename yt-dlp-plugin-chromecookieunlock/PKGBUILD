@@ -7,7 +7,7 @@ pkgrel='1'
 pkgdesc="A yt-dlp plugin to unlock the cookie database of chromium-based browsers."
 arch=('any')
 url="https://github.com/seproDev/${_pkgname}"
-depends=('python')
+depends=('yt-dlp')
 makedepends=('python-build' 'python-installer' 'python-wheel' 'python-hatchling')
 source=("${pkgname}-${pkgver}.tar.gz::${url}/archive/refs/tags/v${pkgver}.tar.gz")
 sha256sums=('ea220725efd4b96ade2d2d8b6f5c823778ea32881b05d1a47ca9b6cac724de15')
@@ -20,4 +20,5 @@ build() {
 package() {
 	cd "${_pkgname}-${pkgver}"
 	python -m installer --destdir="${pkgdir}" dist/*.whl
+ 	install -Dm 0644 LICENSE "${pkgdir}/usr/share/licenses/${pkgname}/LICENSE"
 }

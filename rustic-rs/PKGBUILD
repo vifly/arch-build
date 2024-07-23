@@ -8,7 +8,9 @@ pkgdesc='Fast, encrypted, deduplicated backups powered by Rust'
 arch=('x86_64')
 url="https://github.com/${pkgname}/${_pkgname}"
 license=('MIT OR Apache-2.0')
+depends=('gcc-libs' 'glibc')
 makedepends=('rust')
+options=('!lto')
 source=("${pkgname}-${pkgver}.tar.gz::https://static.crates.io/crates/${pkgname}/${pkgname}-${pkgver}.crate")
 b2sums=('ef8aecdf9f66fe098a3dd5879bfb29d5ac392937765664467d844c5966d9b7f0be024ab603117ddecb638c1f101ee3d7104272c698d10add133f700c77622144')
 
@@ -19,7 +21,6 @@ prepare() {
 
 build() {
     cd "${pkgname}-${pkgver}"
-    CFLAGS+=' -ffat-lto-objects'
     cargo build --frozen --release #--all-features
 }
 

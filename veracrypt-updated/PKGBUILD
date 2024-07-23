@@ -8,7 +8,7 @@ pkgdesc='Disk encryption with strong security based on TrueCrypt'
 arch=('aarch64' 'arm64' 'armhf' 'i686' 'x86_64')
 url='https://www.veracrypt.fr'
 license=("LicenseRef-${_pkgname}")
-depends=('device-mapper' 'fuse2>=2.8.0' 'wxwidgets-common>=3.2.4' 'wxwidgets-gtk3>=3.2.4')
+depends=('device-mapper' 'gcc-libs' 'glibc' 'fuse2>=2.8.0' 'wxwidgets-common>=3.2.4' 'wxwidgets-gtk3>=3.2.4')
 makedepends=('pcsclite' 'yasm')
 optdepends=('sudo: mounting encrypted volumes as nonroot users' 'pcsclite: providing support for smartcards')
 provides=('veracrypt')

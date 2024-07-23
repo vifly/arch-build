@@ -8,6 +8,7 @@ pkgdesc='Application that works as a proxy between Native Messaging browser exte
 arch=('x86_64')
 url="https://github.com/varjolintu/${_pkgname}"
 license=('GPL-3.0-or-later')
+depends=('gcc-libs' 'glibc')
 makedepends=('git' 'rust')
 provides=("${_pkgname}")
 conflicts=("${_pkgname}")

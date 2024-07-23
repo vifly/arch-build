@@ -21,6 +21,7 @@ Include = /etc/pacman.d/chaotic-mirrorlist
 EOM
 
 pacman -Syu --noconfirm archlinuxcn-keyring && pacman -Syu --noconfirm archlinuxcn-mirrorlist-git paru
+sed -i '1i Server = https://repo.archlinuxcn.org/\$arch' /etc/pacman.d/archlinuxcn-mirrorlist
 sed -i "s|^Server = https://repo.archlinuxcn.org/\$arch|Include = /etc/pacman.d/archlinuxcn-mirrorlist|g" /etc/pacman.conf
 
 if [ ! -z "$INPUT_PREINSTALLPKGS" ]; then

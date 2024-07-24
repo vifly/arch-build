@@ -16,16 +16,18 @@ sha512sums=('2833a617f4182386361ca56bd39179e76f011097c57976e8acd8bd1986651112619
 prepare() {
     cd "${pkgname}-${pkgver}"
     cargo fetch --locked --target "$(rustc -vV | sed -n 's/host: //p')"
+    cargo audit
 }
 
 build() {
     cd "${pkgname}-${pkgver}"
-    cargo build --frozen --release --all-features
+    cargo auditable build --frozen --release --all-features
 }
 
 check() {
     cd "${pkgname}-${pkgver}"
     cargo test --frozen --all-features
+    cargo audit bin "target/release/${pkgname}"
 }
 
 package() {

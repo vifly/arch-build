@@ -26,11 +26,11 @@ build() {
   export CGO_LDFLAGS="${LDFLAGS}"
   export GOPATH="${srcdir}"
   export GOFLAGS="-buildmode=pie -mod=vendor -modcacherw"
-  go build -ldflags "-compressdwarf=false -linkmode external" -o "build/${pkgname}" ./cmd/...
+  go build -ldflags "-compressdwarf=false -linkmode external" -o build ./cmd/...
 }
 
 package() {
   cd "${pkgname}-${pkgver}"
-  install -Dm 0755 "build/${pkgname}" "${pkgdir}"/usr/bin/"${pkgname}"
+  install -Dm 0755 "build/${pkgname}" "${pkgdir}"/usr/bin/${pkgname}"
   install -Dm 0644 LICENSE -t "${pkgdir}/usr/share/licenses/${pkgname}"
 }

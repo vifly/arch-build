@@ -26,7 +26,7 @@ build() {
   export CGO_LDFLAGS="${LDFLAGS}"
   export GOPATH="${srcdir}"
   export GOFLAGS="-buildmode=pie -mod=vendor -modcacherw"
-  go build -ldflags "-compressdwarf=false -linkmode external" -o "build/${pkgname}" .
+  go build -ldflags "-compressdwarf=false -linkmode external" -o "build/${pkgname}" ./cmd/...
 }
 
 package() {

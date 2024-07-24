@@ -21,6 +21,7 @@ jobs:
           - fcitx5-pinyin-custom-pinyin-dictionary
           - fcitx5-pinyin-chinese-idiom
           - fcitx5-pinyin-sougou
+          - fselect
           - linuxqq-nt-bwrap
           - linux-zen-versioned-bin
           - mpris-proxy-service
@@ -62,7 +63,6 @@ jobs:
       matrix:
         PKGBUILDs:
           - aqua
-          - fselect
           - ion-git
           - keepassxc-proxy-rust-git
           - rustic-rs

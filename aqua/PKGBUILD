@@ -31,6 +31,6 @@ build() {
 
 package() {
   cd "${pkgname}-${pkgver}"
-  install -Dm 0755 "build/${pkgname}" "${pkgdir}"/usr/bin/${pkgname}"
+  install -Dm 0755 "build/${pkgname}" "${pkgdir}/usr/bin/${pkgname}"
   install -Dm 0644 LICENSE -t "${pkgdir}/usr/share/licenses/${pkgname}"
 }

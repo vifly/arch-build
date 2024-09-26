@@ -49,8 +49,11 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       
-      - uses: actions/download-artifact@v4.1.7
+      - uses: actions/download-artifact@v4
         id: download
+
+      - name: Display structure of downloaded files
+        run: ls -R ${{ steps.download.outputs.download-path }}
       
       - uses: ./create-db-and-upload-action
         with:

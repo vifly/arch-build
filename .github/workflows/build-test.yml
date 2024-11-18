@@ -1,4 +1,4 @@
-name: BUILD
+name: BUILD-test-general
 
 on:
   workflow_dispatch:

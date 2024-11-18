@@ -29,4 +29,4 @@ if [ ! -z "$gpg_key" ]; then
     done
     repo-add --verify --sign "./${repo_name:?}.db.tar.gz" ./*.tar.zst
 fi
-rclone copy ./ "onedrive:${dest_path:?}" --copy-links
+rclone copy ./ "${RCLONE_CONFIG_NAME}:${dest_path:?}" --copy-links

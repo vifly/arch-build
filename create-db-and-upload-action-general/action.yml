@@ -1,6 +1,6 @@
 name: 'Generate Arch Repo database and upload'
 inputs:
-  RCLONE_CONFIG:
+  RCLONE_CONFIG_CONTENT:
     required: true
   RCLONE_CONFIG_NAME:
     required: true
@@ -17,7 +17,7 @@ runs:
   image: 'Dockerfile'
   
   env:
-    RCLONE_CONFIG: ${{ inputs.RCLONE_CONFIG }}
+    RCLONE_CONFIG_CONTENT: ${{ inputs.RCLONE_CONFIG_CONTENT }}
     RCLONE_CONFIG_NAME: ${{inputs.RCLONE_CONFIG_NAME}}
     dest_path: ${{ inputs.dest_path }}
     repo_name: ${{ inputs.repo_name }}

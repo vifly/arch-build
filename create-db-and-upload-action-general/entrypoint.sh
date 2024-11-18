@@ -9,8 +9,7 @@ echo "$RCLONE_CONFIG_NAME"
 
 if [ ! -f ~/.config/rclone/rclone.conf ]; then
     mkdir --parents ~/.config/rclone
-    echo "$RCLONE_CONFIG" >> ~/.config/rclone/rclone.conf
-    cat "~/.config/rclone/rclone.conf"
+    echo "$RCLONE_CONFIG_CONTENT" >> ~/.config/rclone/rclone.conf
 fi
 
 if [ ! -z "$gpg_key" ]; then

@@ -2,20 +2,12 @@ name: BUILD
 
 on:
   workflow_dispatch:
-  #  push:
-#  schedule:
-#    - cron:  '1 */8 * * *'
 
 jobs:
   buildAUR:
     strategy:
       matrix:
-        repos: [osu-lazer, weechat-notify-send, fpp, redsocks, git-cola, realesrgan-ncnn-vulkan, python-torchaudio, python-torchinfo]
-        include:
-          - repos: git-cola
-            preinstall-pkgs: "at-spi2-core"
-          - repos: realesrgan-ncnn-vulkan
-            preinstall-pkgs: "vulkan-intel"
+        repos: [firefox-nightly-i18n-zh-cn]
 
       fail-fast: false
       
@@ -42,30 +34,28 @@ jobs:
         artifacts: "./*/*.zst"
         token: ${{ secrets.GITHUB_TOKEN }}
           
-  uploadToOneDrive:      
+  uploadToCloudStorage:      
     runs-on: ubuntu-latest
     if: always()
     needs: [buildAUR]
-
+    strategy:
+      matrix:
+        config_name: [ R2,onedrive ]
+    
     steps:
       - uses: actions/checkout@v4
-      
       - uses: actions/download-artifact@v4
         id: download
 
       - name: Display structure of downloaded files
         run: ls -R ${{ steps.download.outputs.download-path }}
       
-      - uses: ./create-db-and-upload-action
+      - uses: ./create-db-and-upload-action-general
         with:
-          RCLONE_ONEDRIVE_CLIENT_ID: ${{ secrets.RCLONE_ONEDRIVE_CLIENT_ID }}
-          RCLONE_ONEDRIVE_CLIENT_SECRET: ${{ secrets.RCLONE_ONEDRIVE_CLIENT_SECRET }}
-          RCLONE_ONEDRIVE_REGION: global
-          RCLONE_ONEDRIVE_TOKEN: ${{ secrets.RCLONE_ONEDRIVE_TOKEN }}
-          RCLONE_ONEDRIVE_DRIVE_ID: ${{ secrets.RCLONE_ONEDRIVE_DRIVE_ID }}
-          RCLONE_ONEDRIVE_DRIVE_TYPE: personal
-          dest_path: /archrepo
-          repo_name: vifly
+          RCLONE_CONFIG: ${{ secrets.RCLONE_CONFIG }}
+          RCLONE_CONFIG_NAME: ${{matrix.config_name}}
+          dest_path: /repo/archlinux/
+          repo_name: archlinux-sving1024
           gpg-privatekey: ${{ secrets.gpg_private_key }}
           local_path: ${{ steps.download.outputs.download-path }}
 

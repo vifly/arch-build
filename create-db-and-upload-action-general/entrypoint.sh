@@ -10,6 +10,7 @@ echo "$RCLONE_CONFIG_NAME"
 if [ ! -f ~/.config/rclone/rclone.conf ]; then
     mkdir --parents ~/.config/rclone
     echo "$RCLONE_CONFIG" >> ~/.config/rclone/rclone.conf
+    cat "~/.config/rclone/rclone.conf"
 fi
 
 if [ ! -z "$gpg_key" ]; then
@@ -19,7 +20,13 @@ fi
 cd upload_packages || exit 1
 
 repo-add "./${repo_name:?}.db.tar.gz" ./*.tar.zst
+
+echo "repo-add complete"
+
 python3 $init_path/create-db-and-upload-action/sync.py 
+
+echo "sync complete"
+
 rm "./${repo_name:?}.db.tar.gz"
 rm "./${repo_name:?}.files.tar.gz"
 

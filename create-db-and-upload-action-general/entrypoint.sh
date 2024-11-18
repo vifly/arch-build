@@ -5,6 +5,8 @@ init_path=$PWD
 mkdir upload_packages
 find $local_path -type f -name "*.tar.zst" -exec cp {} ./upload_packages/ \;
 
+echo "$RCLONE_CONFIG_NAME"
+
 if [ ! -f ~/.config/rclone/rclone.conf ]; then
     mkdir --parents ~/.config/rclone
     echo "$RCLONE_CONFIG" >> ~/.config/rclone/rclone.conf
@@ -17,7 +19,7 @@ fi
 cd upload_packages || exit 1
 
 repo-add "./${repo_name:?}.db.tar.gz" ./*.tar.zst
-python3 $init_path/create-db-and-upload-action/sync.py "$RCLONE_CONFIG_NAME"
+python3 $init_path/create-db-and-upload-action/sync.py 
 rm "./${repo_name:?}.db.tar.gz"
 rm "./${repo_name:?}.files.tar.gz"
 

@@ -5,17 +5,11 @@ init_path=$PWD
 mkdir upload_packages
 find $local_path -type f -name "*.tar.zst" -exec cp {} ./upload_packages/ \;
 
+echo "$RCLONE_CONFIG_NAME"
+
 if [ ! -f ~/.config/rclone/rclone.conf ]; then
     mkdir --parents ~/.config/rclone
-    echo "[onedrive]" >> ~/.config/rclone/rclone.conf
-    echo "type = onedrive" >> ~/.config/rclone/rclone.conf
-
-    echo "client_id=$RCLONE_ONEDRIVE_CLIENT_ID" >> ~/.config/rclone/rclone.conf
-    echo "client_secret=$RCLONE_ONEDRIVE_CLIENT_SECRET" >> ~/.config/rclone/rclone.conf
-    echo "region=$RCLONE_ONEDRIVE_REGION" >> ~/.config/rclone/rclone.conf
-    echo "drive_type=$RCLONE_ONEDRIVE_DRIVE_TYPE" >> ~/.config/rclone/rclone.conf
-    echo "token=$RCLONE_ONEDRIVE_TOKEN" >> ~/.config/rclone/rclone.conf
-    echo "drive_id=$RCLONE_ONEDRIVE_DRIVE_ID" >> ~/.config/rclone/rclone.conf
+    echo "$RCLONE_CONFIG_CONTENT" >> ~/.config/rclone/rclone.conf
 fi
 
 if [ ! -z "$gpg_key" ]; then
@@ -25,7 +19,13 @@ fi
 cd upload_packages || exit 1
 
 repo-add "./${repo_name:?}.db.tar.gz" ./*.tar.zst
-python3 $init_path/create-db-and-upload-action/sync.py
+
+echo "repo-add complete"
+
+python3 $init_path/create-db-and-upload-action/sync.py 
+
+echo "sync complete"
+
 rm "./${repo_name:?}.db.tar.gz"
 rm "./${repo_name:?}.files.tar.gz"
 
@@ -37,4 +37,4 @@ if [ ! -z "$gpg_key" ]; then
     done
     repo-add --verify --sign "./${repo_name:?}.db.tar.gz" ./*.tar.zst
 fi
-rclone copy ./ "onedrive:${dest_path:?}" --copy-links
+rclone copy ./ "${RCLONE_CONFIG_NAME}:${dest_path:?}" --copy-links

@@ -11,6 +11,7 @@ from contextlib import suppress
 
 REPO_NAME = os.environ["repo_name"]
 ROOT_PATH = os.environ["dest_path"]
+CONFIG_NAME = os.environ["RCLONE_CONFIG_NAME"] + ":"
 if ROOT_PATH.startswith("/"):
     ROOT_PATH = ROOT_PATH[1:]
 
@@ -56,7 +57,7 @@ def get_pkg_infos(file_path: str) -> list["PkgInfo"]:
 
 def rclone_delete(name: str):
     r = subprocess.run(
-        ["rclone", "delete", f"onedrive:/{ROOT_PATH}/{name}"],
+        ["rclone", "delete", f"{CONFIG_NAME}/{ROOT_PATH}/{name}"],
         stdout=subprocess.PIPE,
         stderr=subprocess.PIPE,
     )
@@ -69,7 +70,7 @@ def rclone_download(name: str, dest_path: str = "./"):
         [
             "rclone",
             "copy",
-            f"onedrive:/{ROOT_PATH}/{name}",
+            f"{CONFIG_NAME}/{ROOT_PATH}/{name}",
             dest_path,
         ],
         stdout=subprocess.PIPE,
@@ -110,7 +111,7 @@ def download_local_miss_files(
 
 if __name__ == "__main__":
     r = subprocess.run(
-        ["rclone", "size", f"onedrive:/{ROOT_PATH}/{REPO_NAME}.db.tar.gz"],
+        ["rclone", "size", f"{CONFIG_NAME}/{ROOT_PATH}/{REPO_NAME}.db.tar.gz"],
         stderr=subprocess.PIPE,
     )
     if r.returncode != 0:
@@ -121,6 +122,9 @@ if __name__ == "__main__":
         print(r.stderr.decode())
         exit(0)
 
+    if CONFIG_NAME == None | CONFIG_NAME == "":
+        result = subprocess.run(["rclone", "listremotes"], capture_output=True)
+        CONFIG_NAME = result.stdout.split("\n")[0]
     local_packages = get_pkg_infos(f"./{REPO_NAME}.db.tar.gz")
 
     rclone_download(f"{REPO_NAME}.db.tar.gz", "/tmp/")
@@ -128,7 +132,7 @@ if __name__ == "__main__":
 
     old_packages = get_old_packages(local_packages, remote_packages)
     for i in old_packages:
-        print(f"delete onedrive {i.filename}")
+        print(f"delete {CONFIG_NAME} {i.filename}")
         rclone_delete(i.filename)
         with suppress(RuntimeError):
             rclone_delete(i.filename + ".sig")

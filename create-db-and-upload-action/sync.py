@@ -14,7 +14,10 @@ ROOT_PATH = os.environ["dest_path"]
 CONFIG_NAME = os.environ["RCLONE_CONFIG_NAME"] + ":"
 if (CONFIG_NAME is None) | (CONFIG_NAME == ""):
     result = subprocess.run(["rclone", "listremotes"], capture_output=True)
-    CONFIG_NAME = result.stdout.split("\n")[0]
+    CONFIG_NAME = result.stdout.decode().split("\n")[0]
+
+print(f"CONFIG_NAME:{CONFIG_NAME}")
+print(result.stdout.decode().split("\n"))
 
 if ROOT_PATH.startswith("/"):
     ROOT_PATH = ROOT_PATH[1:]

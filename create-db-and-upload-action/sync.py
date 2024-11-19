@@ -12,12 +12,15 @@ from contextlib import suppress
 REPO_NAME = os.environ["repo_name"]
 ROOT_PATH = os.environ["dest_path"]
 CONFIG_NAME = os.environ["RCLONE_CONFIG_NAME"] + ":"
-if (CONFIG_NAME is None) | (CONFIG_NAME == ""):
+if (os.environ["RCLONE_CONFIG_NAME"] is None) | (
+    os.environ["RCLONE_CONFIG_NAME"] == ""
+):
     result = subprocess.run(["rclone", "listremotes"], capture_output=True)
     CONFIG_NAME = result.stdout.decode().split("\n")[0]
+    print(result.stdout.decode().split("\n"))
+    print(result.stdout)
 
 print(f"CONFIG_NAME:{CONFIG_NAME}")
-print(result.stdout.decode().split("\n"))
 
 if ROOT_PATH.startswith("/"):
     ROOT_PATH = ROOT_PATH[1:]

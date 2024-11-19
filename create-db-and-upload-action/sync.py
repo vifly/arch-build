@@ -124,8 +124,11 @@ if __name__ == "__main__":
     r = subprocess.run(
         ["rclone", "size", f"{CONFIG_NAME}/{ROOT_PATH}/{REPO_NAME}.db.tar.gz"],
         stderr=subprocess.PIPE,
+        stdout=subprocess.PIPE,
     )
-    if r.returncode != 0:
+    if (r.returncode != 0) | (
+        r.stdout == b"Total objects: 0\nTotal size: 0 B (0 Byte)\n"
+    ):
         print("Remote database file is not exist!")
         print(
             "If you are running this script for the first time, you can ignore this error."

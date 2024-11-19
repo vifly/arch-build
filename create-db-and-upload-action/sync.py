@@ -11,6 +11,8 @@ from contextlib import suppress
 
 REPO_NAME = os.environ["repo_name"]
 ROOT_PATH = os.environ["dest_path"]
+CONFIG_NAME = None
+
 if ("RCLONE_CONFIG_NAME" in os.environ) & (os.environ["RCLONE_CONFIG_NAME"] != ""):
     CONFIG_NAME = os.environ["RCLONE_CONFIG_NAME"] + ":"
 else:

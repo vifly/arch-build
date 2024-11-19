@@ -37,4 +37,5 @@ if [ ! -z "$gpg_key" ]; then
     done
     repo-add --verify --sign "./${repo_name:?}.db.tar.gz" ./*.tar.zst
 fi
-rclone copy ./ "${RCLONE_CONFIG_NAME}:${dest_path:?}" --copy-links
+
+python3 $init_path/create-db-and-upload-action/upload.py 

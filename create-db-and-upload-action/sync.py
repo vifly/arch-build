@@ -12,6 +12,10 @@ from contextlib import suppress
 REPO_NAME = os.environ["repo_name"]
 ROOT_PATH = os.environ["dest_path"]
 CONFIG_NAME = os.environ["RCLONE_CONFIG_NAME"] + ":"
+if CONFIG_NAME == None | CONFIG_NAME == "":
+    result = subprocess.run(["rclone", "listremotes"], capture_output=True)
+    CONFIG_NAME = result.stdout.split("\n")[0]
+
 if ROOT_PATH.startswith("/"):
     ROOT_PATH = ROOT_PATH[1:]
 
@@ -122,9 +126,6 @@ if __name__ == "__main__":
         print(r.stderr.decode())
         exit(0)
 
-    if CONFIG_NAME == None | CONFIG_NAME == "":
-        result = subprocess.run(["rclone", "listremotes"], capture_output=True)
-        CONFIG_NAME = result.stdout.split("\n")[0]
     local_packages = get_pkg_infos(f"./{REPO_NAME}.db.tar.gz")
 
     rclone_download(f"{REPO_NAME}.db.tar.gz", "/tmp/")

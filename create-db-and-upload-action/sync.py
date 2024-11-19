@@ -12,7 +12,7 @@ from contextlib import suppress
 REPO_NAME = os.environ["repo_name"]
 ROOT_PATH = os.environ["dest_path"]
 CONFIG_NAME = os.environ["RCLONE_CONFIG_NAME"] + ":"
-if CONFIG_NAME == None | CONFIG_NAME == "":
+if (CONFIG_NAME is None) | (CONFIG_NAME == ""):
     result = subprocess.run(["rclone", "listremotes"], capture_output=True)
     CONFIG_NAME = result.stdout.split("\n")[0]
 

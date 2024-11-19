@@ -17,7 +17,7 @@ print(f"CONFIG_NAME:{CONFIG_NAME}")
 
 if __name__ == "__main__":
     r = subprocess.run(
-        ["rclone", "copy", "./", f"${CONFIG_NAME}:${ROOT_PATH}", "--copy-links"],
+        ["rclone", "copy", "./", f"{CONFIG_NAME}:{ROOT_PATH}", "--copy-links"],
         stderr=subprocess.PIPE,
     )
     if r.returncode != 0:

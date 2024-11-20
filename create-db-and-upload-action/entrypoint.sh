@@ -30,8 +30,6 @@ python3 $init_path/create-db-and-upload-action/sync.py
 
 echo "::endgroup::" 
 
-echo "
-
 rm "./${repo_name:?}.db.tar.gz"
 rm "./${repo_name:?}.files.tar.gz"
 
@@ -50,4 +48,4 @@ echo "::endgroup::"
 
 echo "::group::Uploading to remote"
 python3 $init_path/create-db-and-upload-action/upload.py 
-echo "::endgroup::" 
+echo "::endgroup::"

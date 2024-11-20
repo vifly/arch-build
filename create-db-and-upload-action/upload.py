@@ -18,8 +18,9 @@ if ROOT_PATH.startswith("/"):
     ROOT_PATH = ROOT_PATH[1:]
 
 if __name__ == "__main__":
+    print(f"{CONFIG_NAME}:/{ROOT_PATH}")
     r = subprocess.run(
-        ["rclone", "copy", "./", f"{CONFIG_NAME}:/{ROOT_PATH}", "--copy-links"],
+        ["rclone", "copy", "./", f"{CONFIG_NAME}/{ROOT_PATH}", "--copy-links"],
         stderr=subprocess.PIPE,
     )
     if r.returncode != 0:

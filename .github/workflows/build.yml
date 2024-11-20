@@ -1,7 +1,6 @@
 name: BUILD
 
 on:
-  workflow_dispatch:
   push:
   schedule:
     - cron:  '1 */8 * * *'

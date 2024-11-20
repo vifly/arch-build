@@ -18,16 +18,24 @@ fi
 
 cd upload_packages || exit 1
 
+echo "::group::Adding packages to the repo"
+
 repo-add "./${repo_name:?}.db.tar.gz" ./*.tar.zst
 
-echo "repo-add complete"
+echo "::endgroup::" 
+
+echo "::group::Removing old packages"
 
 python3 $init_path/create-db-and-upload-action/sync.py 
 
-echo "sync complete"
+echo "::endgroup::" 
+
+echo "
 
 rm "./${repo_name:?}.db.tar.gz"
 rm "./${repo_name:?}.files.tar.gz"
+
+echo "::group::Signing packages"
 
 if [ ! -z "$gpg_key" ]; then
     packages=( "*.tar.zst" )
@@ -38,4 +46,8 @@ if [ ! -z "$gpg_key" ]; then
     repo-add --verify --sign "./${repo_name:?}.db.tar.gz" ./*.tar.zst
 fi
 
+echo "::endgroup::" 
+
+echo "::group::Uploading to remote"
 python3 $init_path/create-db-and-upload-action/upload.py 
+echo "::endgroup::" 

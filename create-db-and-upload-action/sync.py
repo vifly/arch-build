@@ -11,13 +11,13 @@ from contextlib import suppress
 
 REPO_NAME = os.environ["repo_name"]
 ROOT_PATH = os.environ["dest_path"]
-CONFIG_NAME = None
+CONFIG_NAME = os.environ.get("RCLONE_CONFIG_NAME", "")
 
-if ("RCLONE_CONFIG_NAME" in os.environ) & (os.environ["RCLONE_CONFIG_NAME"] != ""):
-    CONFIG_NAME = os.environ["RCLONE_CONFIG_NAME"] + ":"
-else:
+if CONFIG_NAME == "":
     result = subprocess.run(["rclone", "listremotes"], capture_output=True)
     CONFIG_NAME = result.stdout.decode().split("\n")[0]
+if not CONFIG_NAME.endswith(":"):
+    CONFIG_NAME = CONFIG_NAME + ":"
 
 if ROOT_PATH.startswith("/"):
     ROOT_PATH = ROOT_PATH[1:]
@@ -122,9 +122,7 @@ if __name__ == "__main__":
         stderr=subprocess.PIPE,
         stdout=subprocess.PIPE,
     )
-    if (r.returncode != 0) | (
-        r.stdout == b"Total objects: 0\nTotal size: 0 B (0 Byte)\n"
-    ):
+    if r.returncode != 0 or "Total size: 0" in r.stdout.decode():
         print("Remote database file is not exist!")
         print(
             "If you are running this script for the first time, you can ignore this error."

@@ -9,7 +9,7 @@ jobs:
   buildAUR:
     strategy:
       matrix:
-        repos: [osu-lazer, weechat-notify-send, fpp, redsocks, git-cola, realesrgan-ncnn-vulkan, python-torchaudio, python-torchinfo, python-rapidocr-onnxruntime, darkly]
+        repos: [osu-lazer, weechat-notify-send, fpp, redsocks, git-cola, realesrgan-ncnn-vulkan, python-torchaudio, python-torchinfo, python-rapidocr-onnxruntime, darkly, python-faster-whisper]
         include:
           - repos: git-cola
             preinstall-pkgs: "at-spi2-core"

@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -euo pipefail
+
 pkgname=$1
 
 useradd builder -m
@@ -39,10 +41,10 @@ if [[ -d "$pkgname" ]];
     pkgdir="$pkgname"
   else
     pacman -S --needed --noconfirm jq
-    pkgdir="$(get_pkgbase $pkgname)"
+    pkgdir="$(get_pkgbase "$pkgname")"
 fi
 
 echo "The pkgdir is $pkgdir"
 echo "The pkgname is $pkgname"
-cd $pkgdir || exit 1
+cd "$pkgdir"
 python3 ../build-aur-action/encode_name.py

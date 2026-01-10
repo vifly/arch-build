@@ -94,7 +94,6 @@ def rclone_download(name: str, dest_path: str = "./"):
             "copy",
             f"{CONFIG_NAME}/{ROOT_PATH}/{name}",
             dest_path,
-            "--progress",
         ],
         stdout=subprocess.PIPE,
         stderr=subprocess.PIPE,

@@ -199,6 +199,7 @@ def main():
             check=False,
         )
         pkg.copy(pkg.name)
+    print("::endgroup::")
 
     print("::group::Signing packages")
     for pkg in local_packages:

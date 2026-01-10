@@ -183,7 +183,21 @@ def main():
     old_packages = get_old_packages(local_packages, remote_packages)
 
     print("::group::Download missing files")
-    rclone_download("")
+    r = subprocess.run(
+        [
+            "rclone",
+            "copy",
+            f"{CONFIG_NAME}/{ROOT_PATH}/",
+            "./",
+            "--include-from",
+            "*.tar.zst",
+        ],
+        stdout=subprocess.PIPE,
+        stderr=subprocess.PIPE,
+        check=False,
+    )
+    if r.returncode != 0:
+        raise RuntimeError(r.stderr.decode())
     print("::endgroup::")
 
     print("::group::Removing unused files")

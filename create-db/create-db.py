@@ -189,7 +189,7 @@ def main():
             "copy",
             f"{CONFIG_NAME}/{ROOT_PATH}/",
             "./",
-            "--include-from",
+            "--include",
             "*.tar.zst",
         ],
         stdout=subprocess.PIPE,

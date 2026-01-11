@@ -26,12 +26,13 @@ TMP_DIR = pathlib.Path("/tmp/repo")
 
 class PkgInfo(NamedTuple):
     """The package info.
-    
+
     Members:
         filename (str): The package file name.
         pkgname (str): The package name.
         version (str): The package version.
     """
+
     filename: str
     pkgname: str
     version: str
@@ -148,7 +149,7 @@ def remove_old_files(
 
 def main():
     """The main function."""
-    print("::group::Creating temporary directory")
+    print("::group::Creating temporary directory", flush=True)
     TMP_DIR.mkdir(exist_ok=True)
     for pkg in pathlib.Path().glob("./*.tar.zst"):
         r = subprocess.run(
@@ -179,7 +180,7 @@ def main():
 
     old_packages = get_old_packages(local_packages, remote_packages)
 
-    print("::group::Download missing files")
+    print("::group::Download missing files", flush=True)
     r = subprocess.run(
         [
             "rclone",
@@ -194,17 +195,17 @@ def main():
     )
     print("::endgroup::")
 
-    print("::group::Removing unused files")
+    print("::group::Removing unused files", flush=True)
     remove_old_files(local_packages, remote_packages, old_packages)
     print("::endgroup::")
 
-    print("::group::Adding new packages")
+    print("::group::Adding new packages", flush=True)
     for pkg in TMP_DIR.glob("./*.tar.zst"):
         pkg.copy(pkg.name)
 
     print("::endgroup::")
 
-    print("::group::Signing packages")
+    print("::group::Signing packages", flush=True)
     for pkg in local_packages:
         subprocess.run(
             ["gpg", "--detach-sig", "--yes", str(pkg.filename)],
@@ -213,7 +214,7 @@ def main():
         )
     print("::endgroup::")
 
-    print("::group::Adding packages to repo")
+    print("::group::Adding packages to repo", flush=True)
     for pkg in pathlib.Path().glob("./*.tar.zst"):
         subprocess.run(
             ["repo-add", "--verify", "--sign", f"{REPO_NAME}.db.tar.gz", str(pkg)],

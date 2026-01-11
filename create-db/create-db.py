@@ -1,12 +1,10 @@
 #!/usr/bin/python3
 
 import subprocess
-import sys
-import os
 import tarfile
 import shutil
+import os
 from typing import NamedTuple
-from contextlib import suppress
 import pathlib
 import pyalpm
 
@@ -144,8 +142,8 @@ def remove_old_files(
     old_files = [i.filename for i in old_packages]
     for r in remote_files:
         if r in local_files or ".db" in r or ".files" in r or r in old_files:
-            with suppress(RuntimeError):
-                pathlib.Path(r).unlink()
+            print("Removing file:", r)
+            pathlib.Path(r).unlink()
 
 
 def main():
@@ -155,8 +153,7 @@ def main():
     for pkg in pathlib.Path().glob("./*.tar.zst"):
         r = subprocess.run(
             ["repo-add", str(TMP_DIR / "local_tmp.db.tar.gz"), str(pkg)],
-            stderr=subprocess.PIPE,
-            stdout=subprocess.PIPE,
+            stderr=subprocess.STDOUT,
             check=False,
         )
         pkg.copy(TMP_DIR / pkg.name)
@@ -192,45 +189,36 @@ def main():
             "--include",
             "*.tar.zst",
         ],
-        stdout=subprocess.PIPE,
-        stderr=subprocess.PIPE,
-        check=False,
+        stderr=subprocess.STDOUT,
+        check=True,
     )
-    if r.returncode != 0:
-        raise RuntimeError(r.stderr.decode())
     print("::endgroup::")
 
     print("::group::Removing unused files")
     remove_old_files(local_packages, remote_packages, old_packages)
     print("::endgroup::")
 
-    print("::gourp::Adding new packages")
+    print("::group::Adding new packages")
     for pkg in TMP_DIR.glob("./*.tar.zst"):
-        r = subprocess.run(
-            ["repo-add", str(TMP_DIR / "local_tmp.db.tar.gz"), str(pkg)],
-            stderr=subprocess.PIPE,
-            stdout=subprocess.PIPE,
-            check=False,
-        )
         pkg.copy(pkg.name)
+
     print("::endgroup::")
 
     print("::group::Signing packages")
     for pkg in local_packages:
         subprocess.run(
             ["gpg", "--detach-sig", "--yes", str(pkg.filename)],
-            stderr=sys.stderr.fileno(),
-            stdout=sys.stdout.fileno(),
+            stderr=subprocess.STDOUT,
             check=False,
         )
     print("::endgroup::")
+
     print("::group::Adding packages to repo")
     for pkg in pathlib.Path().glob("./*.tar.zst"):
         subprocess.run(
             ["repo-add", "--verify", "--sign", f"{REPO_NAME}.db.tar.gz", str(pkg)],
-            stderr=sys.stderr.fileno(),
-            stdout=sys.stdout.fileno(),
-            check=False,
+            stderr=subprocess.STDOUT,
+            check=True,
         )
     print("::endgroup::")
 

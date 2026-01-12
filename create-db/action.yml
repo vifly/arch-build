@@ -1,25 +1,26 @@
 name: 'Generate Arch Repo database and upload'
+description: 'Generate Arch Repo database'
 inputs:
-  RCLONE_CONFIG_CONTENT:
+  repo_path:
     required: true
-  RCLONE_CONFIG_NAME:
-    required: false
-  dest_path:
-    required: true
+    description: 'Path to the repo containing packages.'
   repo_name:
     required: true
   gpg-privatekey:
     description: 'Your GPG private key, used to sign repo.'
-  local_path:
+  package_path:
     default: './'
+  output_path:
+    description: 'Path to save the generated database.'
+    default: './repo'
+    
 runs:
   using: 'docker'
   image: 'Dockerfile'
   
   env:
-    RCLONE_CONFIG_CONTENT: ${{ inputs.RCLONE_CONFIG_CONTENT }}
-    RCLONE_CONFIG_NAME: ${{inputs.RCLONE_CONFIG_NAME}}
-    dest_path: ${{ inputs.dest_path }}
+    repo_path: ${{ inputs.repo_path }}
     repo_name: ${{ inputs.repo_name }}
     gpg_key: ${{ inputs.gpg-privatekey }}
-    local_path: ${{ inputs.local_path }}
+    package_path: ${{ inputs.package_path }}
+    output_path: ${{ inputs.output_path }}

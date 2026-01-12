@@ -9,17 +9,6 @@ import pathlib
 import pyalpm
 
 REPO_NAME = os.environ["repo_name"]
-ROOT_PATH = os.environ["dest_path"]
-CONFIG_NAME = os.environ.get("RCLONE_CONFIG_NAME", "")
-
-if CONFIG_NAME == "":
-    result = subprocess.run(["rclone", "listremotes"], capture_output=True, check=False)
-    CONFIG_NAME = result.stdout.decode().split("\n")[0]
-if not CONFIG_NAME.endswith(":"):
-    CONFIG_NAME = CONFIG_NAME + ":"
-
-if ROOT_PATH.startswith("/"):
-    ROOT_PATH = ROOT_PATH[1:]
 
 TMP_DIR = pathlib.Path("/tmp/repo")
 
@@ -76,32 +65,6 @@ def get_pkg_infos(file_path: str) -> list["PkgInfo"]:
     return pkg_infos
 
 
-def rclone_download(name: str, dest_path: str = "./"):
-    """Download file <name> from remote and save it to <dest_path>
-
-    Args:
-        name (str): the name of the files to download.
-                    Fill empty string to download the whole directory.
-        dest_path (str): the path to save the file.
-
-    Exceptions:
-        RuntimeError: If rclone fails, raise a RuntimeError containing the stderr of rclone.
-    """
-    r = subprocess.run(
-        [
-            "rclone",
-            "copy",
-            f"{CONFIG_NAME}/{ROOT_PATH}/{name}",
-            dest_path,
-        ],
-        stdout=subprocess.PIPE,
-        stderr=subprocess.PIPE,
-        check=False,
-    )
-    if r.returncode != 0:
-        raise RuntimeError(r.stderr.decode())
-
-
 def get_old_packages(
     local_packages: list["PkgInfo"], remote_packages: list["PkgInfo"]
 ) -> list["PkgInfo"]:
@@ -124,12 +87,11 @@ def get_old_packages(
     return old_packages
 
 
-def remove_old_files(
+def copy_missing_packages(
     local_packages: list["PkgInfo"],
-    remote_packages: list["PkgInfo"],
     old_packages: list["PkgInfo"],
 ):
-    """Remove old files from the local repository.
+    """Copy missing packages from the remote repository.
     Args:
         local_packages (list["PkgInfo"]): A list contains all local packages info.
         remote_packages (list["PkgInfo"]): A list contains all remote packages info.
@@ -139,12 +101,15 @@ def remove_old_files(
         None
     """
     local_files = [i.filename for i in local_packages]
-    remote_files = [i.filename for i in remote_packages]
     old_files = [i.filename for i in old_packages]
-    for r in remote_files:
-        if r in local_files or ".db" in r or ".files" in r or r in old_files:
-            print("Removing file:", r)
-            pathlib.Path(r).unlink()
+    for pkg in TMP_DIR.joinpath("old").glob("./*.tar.zst"):
+        if pkg.name in local_files:
+            continue
+        if pkg.name in old_files:
+            continue
+        print("Copying missing package:", pkg.name)
+        pkg.copy_into("./")
+        TMP_DIR.joinpath("old").joinpath(pkg.name + ".sig").copy_into("./")
 
 
 def main():
@@ -152,57 +117,28 @@ def main():
     print("::group::Creating temporary directory", flush=True)
     TMP_DIR.mkdir(exist_ok=True)
     for pkg in pathlib.Path().glob("./*.tar.zst"):
-        r = subprocess.run(
+        subprocess.run(
             ["repo-add", str(TMP_DIR / "local_tmp.db.tar.gz"), str(pkg)],
             stderr=subprocess.STDOUT,
-            check=False,
+            check=True,
         )
-        pkg.copy(TMP_DIR / pkg.name)
     print("::endgroup::")
-    r = subprocess.run(
-        ["rclone", "size", f"{CONFIG_NAME}/{ROOT_PATH}/{REPO_NAME}.db.tar.gz"],
-        stderr=subprocess.PIPE,
-        stdout=subprocess.PIPE,
-        check=False,
-    )
+
     remote_packages = None
-    if r.returncode != 0 or "Total size: 0" in r.stdout.decode():
+    if not TMP_DIR.joinpath(f"old/{REPO_NAME}.db.tar.gz").exists():
         print("Remote database file is not exist!")
         print(
             "If you are running this script for the first time, you can ignore this error."
         )
-        print(r.stderr.decode())
         remote_packages = []
     else:
-        rclone_download(f"{REPO_NAME}.db.tar.gz", str(TMP_DIR))
-        remote_packages = get_pkg_infos(str(TMP_DIR / f"{REPO_NAME}.db.tar.gz"))
+        remote_packages = get_pkg_infos(str(TMP_DIR / "old" / f"{REPO_NAME}.db.tar.gz"))
     local_packages = get_pkg_infos(str(TMP_DIR / "local_tmp.db.tar.gz"))
 
     old_packages = get_old_packages(local_packages, remote_packages)
 
-    print("::group::Download missing files", flush=True)
-    r = subprocess.run(
-        [
-            "rclone",
-            "copy",
-            f"{CONFIG_NAME}/{ROOT_PATH}/",
-            "./",
-            "--include",
-            "*.tar.zst",
-        ],
-        stderr=subprocess.STDOUT,
-        check=True,
-    )
-    print("::endgroup::")
-
-    print("::group::Removing unused files", flush=True)
-    remove_old_files(local_packages, remote_packages, old_packages)
-    print("::endgroup::")
-
-    print("::group::Adding new packages", flush=True)
-    for pkg in TMP_DIR.glob("./*.tar.zst"):
-        pkg.copy(pkg.name)
-
+    print("::group::Getting missing packages", flush=True)
+    copy_missing_packages(local_packages, old_packages)
     print("::endgroup::")
 
     print("::group::Signing packages", flush=True)

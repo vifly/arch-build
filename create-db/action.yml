@@ -9,7 +9,7 @@ inputs:
   gpg-privatekey:
     description: 'Your GPG private key, used to sign repo.'
   package_path:
-    default: './'
+    default: './packages'
   output_path:
     description: 'Path to save the generated database.'
     default: './repo'

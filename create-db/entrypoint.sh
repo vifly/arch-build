@@ -1,6 +1,7 @@
 #!/bin/bash
 set -e
 
+echo "::group::Preparing files"
 init_path=$PWD
 mkdir -p /tmp/repo/
 mkdir upload_packages
@@ -9,6 +10,7 @@ if [[ -d "/tmp/repo/old" ]]; then
     rm -rf /tmp/repo/old
 fi
 cp -r $repo_path  /tmp/repo/old
+echo "::endgroup::"
 
 echo "::group::Importing GPG key"
 if [ ! -z "$gpg_key" ]; then

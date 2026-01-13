@@ -5,7 +5,8 @@ echo "::group::Preparing files"
 init_path=$PWD
 mkdir -p /tmp/repo/
 mkdir upload_packages
-find $package_path -type f -name "*.tar.zst" -exec cp {} ./upload_packages/ \;
+# do not recursively find files
+find ${package_path} -maxdepth 1 -type f -path "*.tar.zst" -exec cp {} ./upload_packages/ \;
 if [[ -d "/tmp/repo/old" ]]; then
     rm -rf /tmp/repo/old
 fi

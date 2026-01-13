@@ -102,6 +102,8 @@ def copy_missing_packages(
     """
     local_files = [i.filename for i in local_packages]
     old_files = [i.filename for i in old_packages]
+    print("Local files:", local_files)
+    print("Old files:", old_files)
     for pkg in TMP_DIR.joinpath("old").glob("./*.tar.zst"):
         if pkg.name in local_files:
             continue

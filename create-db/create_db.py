@@ -38,7 +38,13 @@ def main():
     print("::group::Adding packages to repo", flush=True)
     for pkg in OUTPUT_PATH.glob("*.tar.zst"):
         subprocess.run(
-            ["repo-add", str(OUTPUT_PATH / f"{REPO_NAME}.db.tar.gz"), str(pkg)],
+            [
+                "repo-add",
+                "--verify",
+                "--sign",
+                str(OUTPUT_PATH / f"{REPO_NAME}.db.tar.gz"),
+                str(pkg),
+            ],
             stderr=subprocess.STDOUT,
             check=True,
         )

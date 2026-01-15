@@ -6,8 +6,8 @@ import shutil
 import os
 from typing import NamedTuple
 import pathlib
-import pyalpm
 import sys
+import pyalpm
 
 REPO_NAME = os.environ["repo_name"]
 

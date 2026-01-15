@@ -107,7 +107,7 @@ def copy_missing_packages(
     old_files = [i.filename for i in old_packages]
     print("Local files:", local_files)
     print("Old files:", old_files)
-    for pkg in DEST_PATH.glob("./*.tar.zst"):
+    for pkg in DEST_PATH.glob("*.tar.zst"):
         if pkg.name in old_files:
             continue
         print("Copying missing package:", pkg.name)
@@ -172,7 +172,7 @@ def main():
     print("::endgroup::")
 
     print("::group::Adding packages to repo", flush=True)
-    for pkg in OUTPUT_PATH.glob("./*.tar.zst"):
+    for pkg in OUTPUT_PATH.glob("*.tar.zst"):
         subprocess.run(
             [
                 "repo-add",

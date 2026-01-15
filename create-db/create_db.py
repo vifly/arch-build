@@ -22,12 +22,12 @@ def main():
     print("::endgroup::")
 
     print("::group::Copying packages to output directory", flush=True)
-    for pkg in PACKAGE_PATH.glob("./*.tar.zst"):
+    for pkg in PACKAGE_PATH.glob("*.tar.zst"):
         pkg.copy_into(OUTPUT_PATH)
     print("::endgroup::")
 
     print("::group::Signing packages", flush=True)
-    for pkg in OUTPUT_PATH.glob("./*.tar.zst"):
+    for pkg in OUTPUT_PATH.glob("*.tar.zst"):
         subprocess.run(
             ["gpg", "--detach-sig", "--yes", str(pkg)],
             stderr=subprocess.STDOUT,
@@ -36,7 +36,7 @@ def main():
     print("::endgroup::")
 
     print("::group::Adding packages to repo", flush=True)
-    for pkg in OUTPUT_PATH.glob("./*.tar.zst"):
+    for pkg in OUTPUT_PATH.glob("*.tar.zst"):
         subprocess.run(
             ["repo-add", str(OUTPUT_PATH / f"{REPO_NAME}.db.tar.gz"), str(pkg)],
             stderr=subprocess.STDOUT,

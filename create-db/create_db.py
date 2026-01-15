@@ -22,7 +22,7 @@ def main():
     print("::endgroup::")
 
     print("::group::Copying packages to output directory", flush=True)
-    for pkg in PACKAGE_PATH.glob("*.tar.zst"):
+    for pkg in PACKAGE_PATH.rglob("*.tar.zst"):
         pkg.copy_into(OUTPUT_PATH)
     print("::endgroup::")
 

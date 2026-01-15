@@ -7,6 +7,7 @@ import os
 from typing import NamedTuple
 import pathlib
 import pyalpm
+import sys
 
 REPO_NAME = os.environ["repo_name"]
 
@@ -203,14 +204,17 @@ if __name__ == "__main__":
         print("Error occurred during execution:", e.cmd)
         print("::endgroup::")
         rollback()
+        sys.exit(1)
     except FileNotFoundError as e:
         print("File not found:", e.filename)
         print("::endgroup::")
         rollback()
+        sys.exit(1)
     except Exception as e:
         print("An unexpected error occurred:", str(e))
         print("::endgroup::")
         rollback()
+        sys.exit(1)
     else:
         print("Repository synchronization completed successfully.")
     finally:

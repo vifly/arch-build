@@ -1,9 +1,6 @@
 name: 'Generate Arch Repo database and upload'
 description: 'Generate Arch Repo database'
 inputs:
-  repo_path:
-    required: true
-    description: 'Path to the repo containing packages. Should not be a directory under package_path'
   repo_name:
     required: true
   gpg-privatekey:
@@ -19,7 +16,6 @@ runs:
   image: 'Dockerfile'
   
   env:
-    repo_path: ${{ inputs.repo_path }}
     repo_name: ${{ inputs.repo_name }}
     gpg_key: ${{ inputs.gpg-privatekey }}
     package_path: ${{ inputs.package_path }}

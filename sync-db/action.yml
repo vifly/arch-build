@@ -1,6 +1,8 @@
 name: Sync Database
 description: Sync Arch Repo database from source to destination
 inputs:
+  gpg-privatekey:
+    description: 'Your GPG private key, used to sign repo.'
   src_repo_path:
     required: true
     description: 'Path to the source repo containing packages.'
@@ -23,3 +25,4 @@ runs:
     src_repo_path: ${{ inputs.src_repo_path }}
     dest_repo_path: ${{ inputs.dest_repo_path }}
     repo_name: ${{ inputs.repo_name }}
+    gpg_key: ${{ inputs.gpg-privatekey }}

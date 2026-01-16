@@ -11,8 +11,8 @@ import pyalpm
 
 REPO_NAME = os.environ["repo_name"]
 
-SRC_PATH = pathlib.Path(os.environ.get("src_path", "./src_repo"))
-DEST_PATH = pathlib.Path(os.environ.get("dest_path", "./dest_repo"))
+SRC_PATH = pathlib.Path(os.environ.get("src_repo_path", "./src_repo"))
+DEST_PATH = pathlib.Path(os.environ.get("dest_repo_path", "./dest_repo"))
 OUTPUT_PATH = pathlib.Path(os.environ.get("output_path", "./repo"))
 TMP_DIR = pathlib.Path("/tmp/repo")
 

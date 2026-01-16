@@ -1,6 +1,10 @@
 #!/bin/bash
 set -e
 
+if [[ -d ${HOME}/.gnupg ]]; then
+    rm -rf ${HOME}/.gnupg
+fi
+
 echo "::group::Importing GPG key"
 if [ ! -z "$gpg_key" ]; then
     echo "$gpg_key" | gpg --import

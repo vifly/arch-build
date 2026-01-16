@@ -1,4 +1,4 @@
-name: 'Generate Arch Repo database and upload'
+name: 'Generate Arch Repo database'
 description: 'Generate Arch Repo database'
 inputs:
   repo_name:

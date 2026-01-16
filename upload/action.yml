@@ -1,4 +1,5 @@
 name: 'Generate Arch Repo database and upload'
+description: 'Upload generated Arch Repo database to remote using rclone'
 inputs:
   RCLONE_CONFIG_CONTENT:
     required: true

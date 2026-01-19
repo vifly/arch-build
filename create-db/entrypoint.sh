@@ -13,4 +13,25 @@ if [ ! -z "$gpg_key" ]; then
 fi
 echo "::endgroup::"
 
-python3 $init_path/create-db/create_db.py
+echo "::group::Creating Output directory"
+if [ -d "$output_path" ]; then
+    rm -rf "$output_path"
+fi
+mkdir -p "$output_path"
+echo "::endgroup::"
+
+echo "::group::Copying packages to output directory"
+find "$package_path" -name "*.tar.zst" -exec cp {} "$output_path" \;
+echo "::endgroup::"
+
+echo "::group::Signing packages"
+for pkg in "$output_path"/*.tar.zst; do
+    gpg --detach-sig --yes "$pkg"
+done
+echo "::endgroup::"
+
+echo "::group::Adding packages to repo"
+for pkg in "$output_path"/*.tar.zst; do
+    repo-add --verify --sign "$output_path/$repo_name.db.tar.gz" "$pkg"
+done
+echo "::endgroup::"

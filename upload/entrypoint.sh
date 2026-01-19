@@ -19,5 +19,22 @@ fi
 cd upload_packages
 
 echo "::group::Uploading to remote"
-python3 $init_path/upload/upload.py
+
+CONFIG_NAME="${RCLONE_CONFIG_NAME:-}"
+
+if [ -z "$CONFIG_NAME" ]; then
+    CONFIG_NAME=$(rclone listremotes | head -n 1)
+fi
+
+if [[ "$CONFIG_NAME" != *":" ]]; then
+    CONFIG_NAME="${CONFIG_NAME}:"
+fi
+
+if [[ "$dest_path" == /* ]]; then
+    dest_path="${dest_path:1}"
+fi
+
+# Sync using rclone
+rclone sync ./ "${CONFIG_NAME}/${dest_path}" 2>&1
+
 echo "::endgroup::"

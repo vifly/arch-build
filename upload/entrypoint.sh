@@ -35,6 +35,6 @@ if [[ "$dest_path" == /* ]]; then
 fi
 
 # Sync using rclone
-rclone sync ./ "${CONFIG_NAME}/${dest_path}" 2>&1
+rclone sync ./ "${CONFIG_NAME}/${dest_path}" 
 
 echo "::endgroup::"

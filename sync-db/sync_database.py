@@ -187,33 +187,20 @@ def main():
         )
     print("::endgroup::")
 
-
-def rollback():
-    """Rollback the repo to the previous state."""
-    print(
-        "An error occurred during repository synchronization. Please check the logs for details."
-    )
-    shutil.rmtree(str(OUTPUT_PATH), ignore_errors=True)
-    DEST_PATH.copy(OUTPUT_PATH)
-
-
 if __name__ == "__main__":
     try:
         main()
     except subprocess.CalledProcessError as e:
         print("Error occurred during execution:", e.cmd)
         print("::endgroup::")
-        rollback()
         sys.exit(1)
     except FileNotFoundError as e:
         print("File not found:", e.filename)
         print("::endgroup::")
-        rollback()
         sys.exit(1)
     except Exception as e:
         print("An unexpected error occurred:", str(e))
         print("::endgroup::")
-        rollback()
         sys.exit(1)
     else:
         print("Repository synchronization completed successfully.")

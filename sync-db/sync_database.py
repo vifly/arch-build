@@ -162,11 +162,11 @@ def main():
 
     old_packages = get_old_packages(local_packages, dest_packages)
 
-    print("::group::Copying missing packages", flush=True)
+    print("::group::Copying missing packages")
     copy_missing_packages(local_packages, old_packages)
     print("::endgroup::")
 
-    print("::group::Copying new packages", flush=True)
+    print("::group::Copying new packages")
     copy_new_packages(local_packages, old_packages, dest_packages)
     print("::endgroup::")
 

@@ -22,6 +22,7 @@ echo "::endgroup::"
 
 echo "::group::Copying packages to output directory"
 find "$package_path" -name "*.tar.zst" -exec cp {} "$output_path" \;
+find "$package_path" -name "*.tar.zst.sig" -exec cp {} "$output_path" \;
 echo "::endgroup::"
 
 echo "::group::Signing packages"

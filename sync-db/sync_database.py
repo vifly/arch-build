@@ -1,6 +1,5 @@
 #!/usr/bin/python3
 
-import subprocess
 import tarfile
 import shutil
 import os
@@ -13,7 +12,7 @@ REPO_NAME = os.environ["repo_name"]
 
 SRC_PATH = pathlib.Path(os.environ.get("src_repo_path", "./src_repo"))
 DEST_PATH = pathlib.Path(os.environ.get("dest_repo_path", "./dest_repo"))
-OUTPUT_PATH = pathlib.Path(os.environ.get("output_path", "./repo"))
+OUTPUT_PATH = pathlib.Path(os.environ.get("output_path", "./new_packages"))
 TMP_DIR = pathlib.Path("/tmp/repo")
 
 
@@ -115,7 +114,6 @@ def copy_missing_packages(
         pkg.copy_into(OUTPUT_PATH)
         DEST_PATH.joinpath(pkg.name + ".sig").copy_into(OUTPUT_PATH)
 
-
 def copy_new_packages(
     src_packages: list["PkgInfo"],
     old_packages: list["PkgInfo"],
@@ -172,28 +170,9 @@ def main():
     copy_new_packages(local_packages, old_packages, dest_packages)
     print("::endgroup::")
 
-    print("::group::Adding packages to repo", flush=True)
-    for pkg in OUTPUT_PATH.glob("*.tar.zst"):
-        subprocess.run(
-            [
-                "repo-add",
-                "--verify",
-                "--sign",
-                str(OUTPUT_PATH / f"{REPO_NAME}.db.tar.gz"),
-                str(pkg),
-            ],
-            stderr=subprocess.STDOUT,
-            check=True,
-        )
-    print("::endgroup::")
-
 if __name__ == "__main__":
     try:
         main()
-    except subprocess.CalledProcessError as e:
-        print("Error occurred during execution:", e.cmd)
-        print("::endgroup::")
-        sys.exit(1)
     except FileNotFoundError as e:
         print("File not found:", e.filename)
         print("::endgroup::")

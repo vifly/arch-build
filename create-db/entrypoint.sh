@@ -26,7 +26,10 @@ echo "::endgroup::"
 
 echo "::group::Signing packages"
 for pkg in "$output_path"/*.tar.zst; do
-    gpg --detach-sig --yes "$pkg"
+    # Only sign if signature does not already exist
+    if [ ! -f "${output_path}/${pkg}.sig" ]; then
+        gpg --detach-sig --yes "$pkg"
+    fi
 done
 echo "::endgroup::"
 

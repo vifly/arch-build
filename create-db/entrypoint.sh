@@ -3,12 +3,11 @@ set -e
 
 init_path=$PWD
 
-if [[ -d ${HOME}/.gnupg ]]; then
-    rm -rf ${HOME}/.gnupg
-fi
-
 echo "::group::Importing GPG key"
 if [ ! -z "$gpg_key" ]; then
+    if [[ -d ${HOME}/.gnupg ]]; then
+        rm -rf ${HOME}/.gnupg
+    fi
     echo "$gpg_key" | gpg --import
 fi
 echo "::endgroup::"
@@ -28,7 +27,7 @@ echo "::endgroup::"
 echo "::group::Signing packages"
 for pkg in "$output_path"/*.tar.zst; do
     # Only sign if signature does not already exist
-    if [ ! -f "${output_path}/${pkg}.sig" ]; then
+    if [ ! -f "${pkg}.sig" ]; then
         gpg --detach-sig --yes "$pkg"
     fi
 done

@@ -28,6 +28,7 @@ echo "builder ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
 
 # Give all users (particularly builder) full access to these files
 chmod -R a+rw .
+sudo -u builder git config --global --add safe.directory /github/workspace
 
 BASEDIR="$PWD"
 echo "BASEDIR: $BASEDIR"

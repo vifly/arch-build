@@ -40,11 +40,43 @@ jobs:
         tag: "packages"
         artifacts: "./*/*.zst"
         token: ${{ secrets.GITHUB_TOKEN }}
+
+  buildNonAUR:
+    strategy:
+      matrix:
+        PKGBUILDs: [darkly-qt6]
+
+      fail-fast: false
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Build Non-AUR packages
+        id: makepkg
+        uses: ./build-nonaur-action
+        with:
+          pkgdir: ${{ matrix.PKGBUILDs }}
+          aurDeps: true
+
+      - uses: actions/upload-artifact@v4
+        with:
+          path: ./*/*.pkg.tar.zst
+          name: ${{ matrix.PKGBUILDs }}
+          if-no-files-found: error
+
+      - uses: ncipollo/release-action@v1
+        with:
+          allowUpdates: true
+          tag: "packages"
+          artifacts: ${{ steps.makepkg.outputs.pkgfile0 }}
+          token: ${{ secrets.GITHUB_TOKEN }}
           
   uploadToOneDrive:      
     runs-on: ubuntu-latest
     if: always()
-    needs: [buildAUR]
+    needs: [buildAUR, buildNonAUR]
 
     steps:
       - uses: actions/checkout@v4

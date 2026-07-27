@@ -1,0 +1,61 @@
+# Maintainer: DeltaCopy <7x0bb03yq@mozmail.com>
+# Maintainer: Vifly <viflythink@gmail.com>
+# Description: Builds Darkly from https://github.com/Bali10050/Darkly
+
+pkgname="darkly-qt6"
+_gitname="Darkly"
+pkgver=0.5.38
+pkgrel=1
+pkgdesc="Fork of Lightly (A modern style for Qt applications)"
+url="https://github.com/Bali10050/darkly"
+arch=('x86_64')
+license=("GPL-2.0-or-later")
+build_dir="build_kf6"
+
+makedepends=(
+  'cmake'
+  'extra-cmake-modules'
+)
+
+options=(!emptydirs)
+
+source=(
+    "${url}/archive/refs/tags/v${pkgver}.tar.gz"
+)
+
+sha256sums=(
+  '6ffb293b9b109fe4a4f8aad20027edb640f063fbc5e7b3621ec58762e42f4bbb'
+)
+
+depends=(
+  'kdecoration'
+  'qt6-declarative'
+  'kcoreaddons'
+  'kcmutils'
+  'kcolorscheme'
+  'kconfig'
+  'kguiaddons'
+  'kiconthemes'
+  'kwindowsystem'
+  'frameworkintegration'
+  'libplasma'
+)
+
+build() (
+  local cmake_options=(
+    -B $build_dir
+    -S "$_gitname-${pkgver}"
+    -DBUILD_QT5=OFF
+    -DBUILD_QT6=ON
+    -DBUILD_TESTING=OFF
+    -Wno-dev
+  )
+
+  cmake "${cmake_options[@]}"
+  cmake --build $build_dir
+)
+
+package() (
+  DESTDIR="$pkgdir" cmake --install $build_dir
+  rm -rf "$pkgdir/usr/lib/cmake"
+)
